@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/jpg" href="https://res.cloudinary.com/duokkf6tl/image/upload/v1773628247/logo_nhdd5o.png">
+<title>Admin – Wi-Ann Travel & Tour</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root {
+    --red:    #CE1126;
+    --green:  #006B3F;
+    --gold:   #FCD116;
+    --navy:   #003366;
+    --navy-dark: #001f4d;
+    --pink:   #FF4DA6;
+    --dark:   #0f1117;
+    --text:   #1e2330;
+    --muted:  #6b7280;
+    --light:  #f4f6fb;
+    --white:  #fff;
+    --border: #e2e8f0;
+    --sidebar-w: 272px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.05);
+    --shadow-lg: 0 20px 60px rgba(0,0,0,0.14), 0 4px 12px rgba(0,0,0,0.08);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Jost',sans-serif; color:var(--text); background:var(--light); -webkit-font-smoothing:antialiased; }
+
+  /* ══ AUTH SCREENS ══ */
+  .auth-wrap {
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background: linear-gradient(145deg, #000d1f 0%, #002255 45%, #001133 100%);
+    position:relative; overflow:hidden;
+  }
+  .auth-wrap::before {
+    content:''; position:absolute; inset:0;
+    background-image: radial-gradient(ellipse at 20% 50%, rgba(0,107,63,0.12) 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 20%, rgba(255,77,166,0.08) 0%, transparent 50%),
+                      radial-gradient(ellipse at 60% 80%, rgba(252,209,22,0.05) 0%, transparent 50%);
+  }
+  .auth-wrap::after {
+    content:''; position:absolute; inset:0;
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 40px);
+  }
+  .auth-kente {
+    position:absolute; top:0; left:0; right:0; height:5px; display:flex; z-index:2;
+  }
+  .auth-kente span { flex:1; }
+  .auth-kente span:nth-child(5n+1) { background:#CE1126; }
+  .auth-kente span:nth-child(5n+2) { background:#FCD116; }
+  .auth-kente span:nth-child(5n+3) { background:#006B3F; }
+  .auth-kente span:nth-child(5n+4) { background:#FCD116; }
+  .auth-kente span:nth-child(5n+5) { background:#CE1126; }
+
+  .auth-card {
+    background:rgba(255,255,255,0.97); width:100%; max-width:460px; margin:2rem;
+    padding:2.8rem; position:relative; z-index:1;
+    box-shadow: var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.1);
+    animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1);
+    border-radius: var(--radius);
+  }
+  @keyframes slideUp { from { opacity:0; transform:translateY(32px) scale(0.98); } to { opacity:1; transform:translateY(0) scale(1); } }
+
+  .auth-logo { display:flex; align-items:center; gap:13px; margin-bottom:2rem; }
+  .auth-logo img {
+    height:58px; width:58px; object-fit:cover; border-radius:50%;
+    border:3px solid var(--navy); background-color:#fff; padding:4px; display:block;
+    box-shadow: 0 4px 12px rgba(0,51,102,0.2);
+  }
+  .auth-logo-text .t1 { font-size:21px; font-weight:900; color:var(--navy); text-transform:uppercase; display:block; line-height:1.1; letter-spacing:0.5px; }
+  .auth-logo-text .t2 { font-size:13px; font-weight:700; color:var(--pink); text-transform:uppercase; display:block; letter-spacing:1px; }
+
+  .auth-badge {
+    display:inline-flex; align-items:center; gap:6px; background:rgba(0,51,102,0.07); color:var(--navy);
+    font-size:0.68rem; font-weight:800; letter-spacing:2px; text-transform:uppercase;
+    padding:5px 12px; margin-bottom:1.2rem; border:1px solid rgba(0,51,102,0.15);
+    border-radius:20px;
+  }
+  .auth-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--green); flex-shrink:0; }
+  .auth-card h1 { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:var(--dark); margin-bottom:0.25rem; line-height:1.1; }
+  .auth-card p.sub { color:var(--muted); font-size:0.87rem; margin-bottom:1.8rem; line-height:1.5; }
+
+  .auth-divider { height:3px; display:flex; margin-bottom:1.8rem; border-radius:2px; overflow:hidden; }
+  .auth-divider span { flex:1; }
+  .auth-divider span:nth-child(1) { background:var(--red); }
+  .auth-divider span:nth-child(2) { background:var(--gold); }
+  .auth-divider span:nth-child(3) { background:var(--green); }
+
+  .form-group { margin-bottom:1.1rem; }
+  .form-group label { display:block; font-size:0.75rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--text); margin-bottom:0.45rem; }
+  .form-group input, .form-group select, .form-group textarea {
+    width:100%; padding:0.85rem 1rem; border:1.5px solid var(--border);
+    font-family:'Jost',sans-serif; font-size:0.9rem; color:var(--dark);
+    outline:none; transition:border-color 0.2s, box-shadow 0.2s; background:var(--white);
+    border-radius:var(--radius-sm);
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color:var(--navy); box-shadow:0 0 0 3px rgba(0,51,102,0.1);
+  }
+  .form-group input.error { border-color:var(--red); box-shadow:0 0 0 3px rgba(206,17,38,0.1); }
+  .err-msg { font-size:0.75rem; color:var(--red); margin-top:0.35rem; display:none; font-weight:600; }
+  .err-msg.show { display:block; }
+
+  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; }
+
+  .input-wrap { position:relative; }
+  .input-wrap i { position:absolute; right:0.9rem; top:50%; transform:translateY(-50%); color:var(--muted); font-size:0.85rem; cursor:pointer; transition:color 0.2s; }
+  .input-wrap i:hover { color:var(--navy); }
+
+  .btn-auth {
+    width:100%; padding:1rem; background:var(--navy); color:#fff;
+    border:none; font-family:'Jost',sans-serif; font-size:0.95rem; font-weight:700;
+    cursor:pointer; transition:all 0.2s;
+    display:flex; align-items:center; justify-content:center; gap:0.5rem;
+    margin-top:1.2rem; border-radius:var(--radius-sm); letter-spacing:0.3px;
+  }
+  .btn-auth:hover { background:var(--navy-dark); transform:translateY(-1px); box-shadow:0 6px 20px rgba(0,51,102,0.3); }
+  .btn-auth:active { transform:translateY(0); }
+
+  .auth-switch { text-align:center; margin-top:1.2rem; font-size:0.85rem; color:var(--muted); }
+  .auth-switch a { color:var(--pink); font-weight:700; cursor:pointer; text-decoration:none; transition:opacity 0.15s; }
+  .auth-switch a:hover { opacity:0.8; text-decoration:underline; }
+
+  .role-select { display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; margin-bottom:1.1rem; }
+  .role-opt {
+    border:1.5px solid var(--border); padding:0.75rem 1rem; cursor:pointer;
+    transition:all 0.2s; text-align:center; font-size:0.82rem; font-weight:600;
+    border-radius:var(--radius-sm);
+  }
+  .role-opt:hover, .role-opt.active { border-color:var(--green); background:rgba(0,107,63,0.06); color:var(--green); }
+  .role-opt i { display:block; font-size:1.2rem; margin-bottom:0.3rem; }
+
+  /* ══ DASHBOARD ══ */
+  #dashboardPage { display:none; min-height:100vh; }
+
+  /* Sidebar */
+  .sidebar {
+    position:fixed; left:0; top:0; bottom:0; width:var(--sidebar-w);
+    background: linear-gradient(180deg, #001a40 0%, #002b5e 60%, #001f4d 100%);
+    display:flex; flex-direction:column; z-index:100;
+    transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+  }
+  .sidebar-logo {
+    padding:1.6rem 1.4rem; display:flex; align-items:center; gap:12px;
+    border-bottom:1px solid rgba(255,255,255,0.08);
+  }
+  .sidebar-logo img {
+    height:48px; width:48px; object-fit:cover; border-radius:50%;
+    border:2px solid rgba(255,255,255,0.25); background-color:#fff; padding:3px; display:block;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .sidebar-logo-text .t1 { font-size:17px; font-weight:900; color:#fff; text-transform:uppercase; display:block; line-height:1.1; letter-spacing:0.5px; }
+  .sidebar-logo-text .t2 { font-size:11px; font-weight:700; color:var(--pink); text-transform:uppercase; display:block; letter-spacing:1px; margin-top:1px; }
+
+  .sidebar-kente { height:3px; display:flex; flex-shrink:0; }
+  .sidebar-kente span { flex:1; }
+  .sidebar-kente span:nth-child(3n+1) { background:var(--red); }
+  .sidebar-kente span:nth-child(3n+2) { background:var(--gold); }
+  .sidebar-kente span:nth-child(3n+3) { background:var(--green); }
+
+  .sidebar-nav { flex:1; padding:1rem 0.75rem; overflow-y:auto; }
+  .sidebar-nav::-webkit-scrollbar { width:3px; }
+  .sidebar-nav::-webkit-scrollbar-track { background:transparent; }
+  .sidebar-nav::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:2px; }
+  .nav-section { padding:0.6rem 0.7rem 0.3rem; font-size:0.62rem; font-weight:800; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,0.3); }
+  .nav-item {
+    display:flex; align-items:center; gap:0.8rem;
+    padding:0.72rem 0.9rem; color:rgba(255,255,255,0.55);
+    cursor:pointer; transition:all 0.2s; font-size:0.875rem; font-weight:500;
+    position:relative; text-decoration:none; border-radius:var(--radius-sm);
+    margin-bottom:2px;
+  }
+  .nav-item:hover { color:#fff; background:rgba(255,255,255,0.08); }
+  .nav-item.active { color:#fff; background:rgba(255,255,255,0.12); }
+  .nav-item.active::before { content:''; position:absolute; left:-0.75rem; top:50%; transform:translateY(-50%); height:60%; width:3px; background:var(--pink); border-radius:0 3px 3px 0; }
+  .nav-item i { width:18px; text-align:center; font-size:0.9rem; flex-shrink:0; }
+  .nav-badge { margin-left:auto; background:var(--red); color:#fff; font-size:0.63rem; font-weight:800; padding:2px 7px; border-radius:10px; }
+
+  .sidebar-user {
+    padding:1.1rem 1.2rem; border-top:1px solid rgba(255,255,255,0.08);
+    display:flex; align-items:center; gap:0.8rem;
+    background:rgba(0,0,0,0.15);
+  }
+  .user-avatar {
+    width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--green),#00a85a);
+    display:flex; align-items:center; justify-content:center;
+    color:#fff; font-weight:800; font-size:0.88rem; flex-shrink:0;
+    box-shadow: 0 2px 8px rgba(0,107,63,0.4);
+  }
+  .user-info .name { color:#fff; font-size:0.82rem; font-weight:700; }
+  .user-info .role { color:rgba(255,255,255,0.4); font-size:0.7rem; margin-top:1px; }
+  .btn-logout { margin-left:auto; color:rgba(255,255,255,0.35); cursor:pointer; transition:all 0.2s; background:none; border:none; font-size:0.9rem; width:30px; height:30px; display:flex; align-items:center; justify-content:center; border-radius:6px; }
+  .btn-logout:hover { color:var(--red); background:rgba(206,17,38,0.15); }
+
+  /* Main content */
+  .main { margin-left:var(--sidebar-w); min-height:100vh; display:flex; flex-direction:column; }
+
+  .topbar {
+    background:var(--white);
+    border-bottom:1px solid var(--border);
+    padding:0 2rem; height:68px; display:flex; align-items:center; justify-content:space-between;
+    position:sticky; top:0; z-index:50;
+    box-shadow: var(--shadow-sm);
+  }
+  .topbar::after {
+    content:''; position:absolute; bottom:0; left:0; right:0; height:2px;
+    background: linear-gradient(90deg, #CE1126 33.3%, #FCD116 33.3% 66.6%, #006B3F 66.6%);
+  }
+  .topbar-left h2 { font-family:'Cormorant Garamond',serif; font-size:1.55rem; font-weight:700; color:var(--dark); letter-spacing:-0.3px; }
+  .topbar-left p { font-size:0.78rem; color:var(--muted); margin-top:1px; }
+  .topbar-right { display:flex; align-items:center; gap:1rem; }
+  .topbar-date { font-size:0.78rem; color:var(--muted); font-weight:500; background:var(--light); padding:5px 12px; border-radius:20px; }
+  .topbar-notif { position:relative; cursor:pointer; color:var(--muted); font-size:1.05rem; width:36px; height:36px; display:flex; align-items:center; justify-content:center; border-radius:8px; transition:all 0.2s; background:var(--light); }
+  .topbar-notif:hover { background:var(--border); color:var(--navy); }
+  .notif-dot { position:absolute; top:6px; right:7px; width:7px; height:7px; background:var(--red); border-radius:50%; border:2px solid #fff; }
+
+  .content { padding:2rem; flex:1; }
+
+  /* Stats */
+  .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1.2rem; margin-bottom:1.8rem; }
+  .stat-card {
+    background:var(--white); padding:1.6rem; border:1px solid var(--border);
+    position:relative; overflow:hidden; transition:transform 0.2s, box-shadow 0.2s;
+    border-radius:var(--radius);
+    box-shadow: var(--shadow-sm);
+  }
+  .stat-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+  .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:var(--radius) var(--radius) 0 0; }
+  .stat-card:nth-child(1)::before { background:linear-gradient(90deg,var(--green),#00a85a); }
+  .stat-card:nth-child(2)::before { background:linear-gradient(90deg,var(--gold),#ffe066); }
+  .stat-card:nth-child(3)::before { background:linear-gradient(90deg,var(--red),#e83358); }
+  .stat-card:nth-child(4)::before { background:linear-gradient(90deg,var(--navy),#1a5faa); }
+  .stat-icon { width:44px; height:44px; display:flex; align-items:center; justify-content:center; margin-bottom:1rem; font-size:1.1rem; border-radius:10px; }
+  .stat-card:nth-child(1) .stat-icon { background:rgba(0,107,63,0.1); color:var(--green); }
+  .stat-card:nth-child(2) .stat-icon { background:rgba(252,209,22,0.15); color:#a07c00; }
+  .stat-card:nth-child(3) .stat-icon { background:rgba(206,17,38,0.1); color:var(--red); }
+  .stat-card:nth-child(4) .stat-icon { background:rgba(0,51,102,0.1); color:var(--navy); }
+  .stat-value { font-family:'Cormorant Garamond',serif; font-size:2.2rem; font-weight:700; color:var(--dark); line-height:1; }
+  .stat-label { font-size:0.77rem; color:var(--muted); margin-top:0.35rem; font-weight:600; text-transform:uppercase; letter-spacing:0.5px; }
+  .stat-change { font-size:0.74rem; margin-top:0.6rem; font-weight:700; display:flex; align-items:center; gap:4px; }
+  .stat-change.up { color:var(--green); }
+  .stat-change.down { color:var(--red); }
+
+  /* Orders table */
+  .section-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem; }
+  .section-header h3 { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:700; color:var(--dark); letter-spacing:-0.3px; }
+  .section-header p { font-size:0.8rem; color:var(--muted); margin-top:2px; }
+
+  .table-toolbar { display:flex; align-items:center; gap:0.8rem; margin-bottom:1rem; flex-wrap:wrap; }
+  .search-wrap { position:relative; flex:1; min-width:200px; }
+  .search-wrap i { position:absolute; left:0.9rem; top:50%; transform:translateY(-50%); color:var(--muted); font-size:0.85rem; }
+  .search-wrap input {
+    width:100%; padding:0.7rem 0.9rem 0.7rem 2.4rem;
+    border:1.5px solid var(--border); font-family:'Jost',sans-serif;
+    font-size:0.85rem; outline:none; transition:all 0.2s; border-radius:var(--radius-sm);
+    background:var(--white);
+  }
+  .search-wrap input:focus { border-color:var(--navy); box-shadow:0 0 0 3px rgba(0,51,102,0.08); }
+
+  .filter-select {
+    padding:0.7rem 0.9rem; border:1.5px solid var(--border);
+    font-family:'Jost',sans-serif; font-size:0.85rem; outline:none;
+    cursor:pointer; background:var(--white); transition:all 0.2s;
+    border-radius:var(--radius-sm); color:var(--text);
+  }
+  .filter-select:focus { border-color:var(--navy); }
+
+  .btn-export {
+    padding:0.7rem 1.2rem; background:var(--white); color:var(--text);
+    border:1.5px solid var(--border); font-family:'Jost',sans-serif; font-size:0.82rem; font-weight:700;
+    cursor:pointer; display:flex; align-items:center; gap:0.4rem;
+    transition:all 0.2s; border-radius:var(--radius-sm);
+  }
+  .btn-export:hover { background:var(--light); border-color:var(--navy); color:var(--navy); }
+
+  .export-wrap { position:relative; display:inline-block; }
+  .export-dropdown {
+    position:absolute; right:0; top:calc(100% + 6px); background:#fff;
+    border:1.5px solid var(--border); min-width:170px; z-index:50;
+    box-shadow:var(--shadow-lg); display:none; border-radius:var(--radius-sm); overflow:hidden;
+  }
+  .export-dropdown.open { display:block; animation:fadeIn 0.15s ease; }
+  .export-opt {
+    display:flex; align-items:center; gap:0.6rem; padding:0.75rem 1rem;
+    font-size:0.83rem; font-weight:600; cursor:pointer; color:var(--dark);
+    transition:background 0.15s; border:none; background:none; width:100%; text-align:left;
+    font-family:'Jost',sans-serif;
+  }
+  .export-opt:hover { background:var(--light); }
+  .export-opt i { width:16px; text-align:center; }
+
+  .table-wrap { background:var(--white); border:1px solid var(--border); overflow-x:auto; border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+  table { width:100%; border-collapse:collapse; font-size:0.85rem; }
+  thead { background:#f8fafd; }
+  th {
+    padding:0.9rem 1rem; text-align:left; font-size:0.68rem; font-weight:800;
+    letter-spacing:1.5px; text-transform:uppercase; color:var(--muted);
+    border-bottom:1.5px solid var(--border); white-space:nowrap;
+  }
+  td { padding:0.95rem 1rem; border-bottom:1px solid var(--border); vertical-align:middle; }
+  tr:last-child td { border-bottom:none; }
+  tr:hover td { background:rgba(0,51,102,0.02); }
+
+  .order-id { font-weight:800; color:var(--green); font-size:0.88rem; font-family:'Jost',sans-serif; letter-spacing:0.3px; }
+  .customer-cell { display:flex; align-items:center; gap:0.7rem; }
+  .cust-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.72rem; color:#fff; flex-shrink:0; }
+  .cust-name { font-weight:700; font-size:0.85rem; }
+  .cust-email { font-size:0.74rem; color:var(--muted); margin-top:1px; }
+
+  .status-badge {
+    display:inline-flex; align-items:center; gap:0.35rem;
+    padding:4px 10px; font-size:0.71rem; font-weight:800; letter-spacing:0.5px;
+    border-radius:20px;
+  }
+  .status-badge::before { content:''; width:5px; height:5px; border-radius:50%; display:inline-block; flex-shrink:0; }
+  .status-badge.confirmed { background:rgba(0,107,63,0.1); color:var(--green); }
+  .status-badge.confirmed::before { background:var(--green); }
+  .status-badge.pending { background:rgba(252,209,22,0.2); color:#a07c00; }
+  .status-badge.pending::before { background:#e6b800; }
+  .status-badge.cancelled { background:rgba(206,17,38,0.1); color:var(--red); }
+  .status-badge.cancelled::before { background:var(--red); }
+  .status-badge.completed { background:rgba(0,51,102,0.1); color:var(--navy); }
+  .status-badge.completed::before { background:var(--navy); }
+
+  .pay-method-cell { display:flex; align-items:center; gap:0.4rem; font-size:0.82rem; }
+  .pay-method-cell i { color:var(--green); }
+
+  .action-btns { display:flex; gap:0.4rem; }
+  .action-btn {
+    width:30px; height:30px; display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--border); cursor:pointer; font-size:0.78rem; color:var(--muted);
+    background:var(--white); transition:all 0.2s; border-radius:6px;
+  }
+  .action-btn:hover.view { background:rgba(0,107,63,0.1); border-color:var(--green); color:var(--green); }
+  .action-btn:hover.edit { background:rgba(252,209,22,0.15); border-color:#e6b800; color:#a07c00; }
+  .action-btn:hover.del { background:rgba(206,17,38,0.1); border-color:var(--red); color:var(--red); }
+
+  .amount-cell { font-weight:800; color:var(--dark); }
+
+  /* Pagination */
+  .pagination { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.2rem; border-top:1px solid var(--border); background:var(--white); border-radius:0 0 var(--radius) var(--radius); }
+  .pag-info { font-size:0.79rem; color:var(--muted); font-weight:500; }
+  .pag-btns { display:flex; gap:0.3rem; }
+  .pag-btn {
+    min-width:32px; height:32px; border:1.5px solid var(--border); background:var(--white);
+    cursor:pointer; font-size:0.8rem; font-family:'Jost',sans-serif; font-weight:700;
+    transition:all 0.2s; display:flex; align-items:center; justify-content:center;
+    border-radius:6px; padding:0 6px;
+  }
+  .pag-btn:hover, .pag-btn.active { background:var(--green); border-color:var(--green); color:#fff; }
+  .pag-btn:disabled { opacity:0.4; cursor:not-allowed; }
+
+  /* Order Detail Modal */
+  .overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); z-index:200; display:none; align-items:center; justify-content:center; }
+  .overlay.open { display:flex; animation:fadeIn 0.2s ease; }
+  .detail-modal { background:var(--white); width:100%; max-width:580px; margin:1rem; max-height:90vh; overflow-y:auto; position:relative; animation:slideUp 0.3s cubic-bezier(0.16,1,0.3,1); border-radius:var(--radius); box-shadow:var(--shadow-lg); }
+  .detail-modal-kente { height:4px; display:flex; border-radius:var(--radius) var(--radius) 0 0; overflow:hidden; }
+  .detail-modal-kente span { flex:1; }
+  .detail-modal-kente span:nth-child(5n+1) { background:#CE1126; }
+  .detail-modal-kente span:nth-child(5n+2) { background:#FCD116; }
+  .detail-modal-kente span:nth-child(5n+3) { background:#1a1a1a; }
+  .detail-modal-kente span:nth-child(5n+4) { background:#006B3F; }
+  .detail-modal-kente span:nth-child(5n+5) { background:#FCD116; }
+  .detail-body { padding:2rem; }
+  .detail-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:1.5rem; }
+  .detail-ref { font-family:'Cormorant Garamond',serif; font-size:1.9rem; font-weight:700; color:var(--dark); line-height:1; }
+  .modal-close-btn { background:var(--light); border:none; width:34px; height:34px; cursor:pointer; font-size:1rem; color:var(--muted); display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; border-radius:8px; }
+  .modal-close-btn:hover { background:var(--red); color:#fff; }
+  .detail-section { margin-bottom:1.4rem; }
+  .detail-section h4 { font-size:0.68rem; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:0.75rem; padding-bottom:0.4rem; border-bottom:1px solid var(--border); }
+  .detail-row { display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0; font-size:0.85rem; }
+  .detail-row span:first-child { color:var(--muted); font-weight:500; }
+  .detail-row span:last-child { font-weight:700; color:var(--dark); }
+  .detail-total { background:linear-gradient(135deg,#f0f7f4,#e8f5ee); padding:1.1rem 1.2rem; display:flex; justify-content:space-between; align-items:center; margin-top:1rem; border-radius:var(--radius-sm); border:1px solid rgba(0,107,63,0.15); }
+  .detail-total span:first-child { font-weight:800; font-size:0.82rem; letter-spacing:1px; text-transform:uppercase; color:var(--green); }
+  .detail-total span:last-child { font-family:'Cormorant Garamond',serif; font-size:1.7rem; font-weight:700; color:var(--green); }
+
+  .status-select {
+    padding:0.5rem 0.8rem; border:1.5px solid var(--border); font-family:'Jost',sans-serif;
+    font-size:0.82rem; font-weight:600; cursor:pointer; background:var(--white); outline:none;
+    border-radius:var(--radius-sm); transition:all 0.2s;
+  }
+  .status-select:focus { border-color:var(--navy); }
+  .btn-save-status { padding:0.5rem 1.1rem; background:var(--green); color:#fff; border:none; font-family:'Jost',sans-serif; font-size:0.82rem; font-weight:800; cursor:pointer; transition:all 0.2s; border-radius:var(--radius-sm); }
+  .btn-save-status:hover { background:#14512B; transform:translateY(-1px); }
+
+  /* Add order modal form */
+  .add-order-btn {
+    padding:0.7rem 1.2rem; background:var(--green); color:#fff;
+    border:none; font-family:'Jost',sans-serif; font-size:0.82rem; font-weight:800;
+    cursor:pointer; display:flex; align-items:center; gap:0.4rem; transition:all 0.2s;
+    border-radius:var(--radius-sm); letter-spacing:0.2px;
+  }
+  .add-order-btn:hover { background:#14512B; transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,107,63,0.3); }
+
+  /* Toast */
+  .toast {
+    position:fixed; bottom:2rem; right:2rem; background:var(--dark); color:#fff;
+    padding:0.9rem 1.3rem; font-size:0.85rem; font-weight:600; z-index:999;
+    display:flex; align-items:center; gap:0.6rem; transform:translateY(120px);
+    opacity:0; transition:all 0.35s cubic-bezier(0.16,1,0.3,1); max-width:340px;
+    border-radius:var(--radius-sm); box-shadow:var(--shadow-lg);
+  }
+  .toast.show { transform:translateY(0); opacity:1; }
+  .toast.success { background:var(--green); }
+  .toast.error { background:var(--red); }
+
+  /* Empty state */
+  .empty-state { text-align:center; padding:4rem 2rem; }
+  .empty-state i { font-size:2.8rem; color:var(--border); margin-bottom:1.2rem; display:block; }
+  .empty-state p { color:var(--muted); font-size:0.9rem; font-weight:500; }
+
+  /* Mobile */
+  .mob-toggle {
+    display:none; background:none; border:none; cursor:pointer;
+    padding:4px; flex-direction:column; justify-content:center; align-items:center; gap:5px;
+  }
+  .mob-toggle .bar {
+    display:block; width:22px; height:2px; background:var(--dark);
+    border-radius:2px; transition:transform 0.3s ease, opacity 0.3s ease;
+    transform-origin:center;
+  }
+  .mob-toggle.open .bar:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+  .mob-toggle.open .bar:nth-child(2) { opacity:0; transform:scaleX(0); }
+  .mob-toggle.open .bar:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+  /* ── RESPONSIVE: TABLET (≤1024px) ── */
+  @media (max-width: 1024px) {
+    :root { --sidebar-w: 240px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .overview-grid { grid-template-columns: 1fr; }
+    .reports-grid { grid-template-columns: 1fr; }
+    .topbar-date { display: none; }
+  }
+
+  /* ── RESPONSIVE: TABLET PORTRAIT / LARGE MOBILE (≤768px) ── */
+  @media (max-width: 768px) {
+    :root { --sidebar-w: 272px; }
+    .sidebar { transform: translateX(-100%); box-shadow: none; }
+    .sidebar.open { transform: translateX(0); box-shadow: 8px 0 32px rgba(0,0,0,0.25); }
+    .main { margin-left: 0; }
+    .mob-toggle { display: flex; }
+    .topbar { padding: 0 1rem; height: 60px; }
+    .topbar-left h2 { font-size: 1.2rem; }
+    .topbar-left p { display: none; }
+    .content { padding: 1rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .stat-card { padding: 1.1rem; }
+    .stat-value { font-size: 1.7rem; }
+    .overview-grid { grid-template-columns: 1fr; }
+    .reports-grid { grid-template-columns: 1fr; }
+    .section-header { flex-wrap: wrap; gap: 0.6rem; }
+    .section-header > div:first-child { flex: 1; min-width: 0; }
+    .table-toolbar { gap: 0.5rem; }
+    .search-wrap { min-width: 100%; order: -1; }
+    .filter-select { flex: 1; min-width: 0; font-size: 0.8rem; }
+    .btn-export { font-size: 0.78rem; padding: 0.6rem 0.8rem; }
+    /* Orders table — hide Pax + Payment cols */
+    .orders-table th:nth-child(5),
+    .orders-table td:nth-child(5),
+    .orders-table th:nth-child(7),
+    .orders-table td:nth-child(7) { display: none; }
+    /* Customers table — hide less critical cols */
+    .customers-table th:nth-child(2),
+    .customers-table td:nth-child(2),
+    .customers-table th:nth-child(6),
+    .customers-table td:nth-child(6) { display: none; }
+    .detail-modal { margin: 0; max-height: 95vh; border-radius: var(--radius) var(--radius) 0 0; position: fixed; bottom: 0; left: 0; right: 0; max-width: 100%; }
+    .overlay { align-items: flex-end; }
+    .quick-actions-grid { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+    .quick-action-btn { padding: 0.7rem 0.3rem; font-size: 0.7rem; }
+    .seg-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; flex-shrink: 0; }
+    .seg-tabs::-webkit-scrollbar { display: none; }
+    .seg-tab { white-space: nowrap; font-size: 0.78rem; padding: 0.55rem 0.8rem; flex-shrink: 0; }
+    .tours-catalog-grid { grid-template-columns: 1fr; }
+    .pagination { flex-wrap: wrap; gap: 0.5rem; }
+    .pag-info { width: 100%; text-align: center; }
+    .pag-btns { margin: 0 auto; }
+    .settings-2col { grid-template-columns: 1fr !important; }
+    .form-row { grid-template-columns: 1fr; }
+    .topbar-date { display: none; }
+    .add-order-btn { font-size: 0.78rem; padding: 0.6rem 0.9rem; }
+    .tour-pkg-actions { flex-wrap: wrap; }
+  }
+
+  /* ── RESPONSIVE: MOBILE (≤480px) ── */
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .stat-card { padding: 0.9rem; }
+    .stat-value { font-size: 1.5rem; }
+    .stat-label { font-size: 0.72rem; }
+    .stat-icon { width: 36px; height: 36px; font-size: 0.9rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .content { padding: 0.75rem; }
+    /* Further reduce orders table */
+    .orders-table th:nth-child(4),
+    .orders-table td:nth-child(4),
+    .orders-table th:nth-child(6),
+    .orders-table td:nth-child(6) { display: none; }
+    /* Further reduce customers table */
+    .customers-table th:nth-child(3),
+    .customers-table td:nth-child(3),
+    .customers-table th:nth-child(5),
+    .customers-table td:nth-child(5) { display: none; }
+    .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
+    .auth-card { padding: 1.8rem 1.2rem; margin: 1rem; }
+    .detail-body { padding: 1.2rem; }
+    .detail-ref { font-size: 1.4rem; }
+  }
+
+  /* ── SIDEBAR OVERLAY BACKDROP ── */
+  .sidebar-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+    z-index: 99; backdrop-filter: blur(2px);
+  }
+  @media (max-width: 768px) {
+    .sidebar-backdrop.show { display: block; }
+  }
+
+  .dash-section { animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+  /* Dash Card */
+  .dash-card { background:#fff; border:1px solid var(--border); padding:1.5rem; margin-bottom:0; border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+  .dash-card-title { font-size:0.72rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); margin-bottom:1.2rem; display:flex; align-items:center; gap:0.5rem; }
+
+  /* Overview grid */
+  .overview-grid { display:grid; grid-template-columns:1fr 320px; gap:1.2rem; margin-bottom:1.8rem; }
+
+  /* Quick Actions */
+  .quick-actions-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.7rem; }
+  .quick-action-btn { background:var(--light); border:1.5px solid var(--border); padding:0.9rem 0.5rem; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:0.4rem; font-family:'Jost',sans-serif; font-size:0.75rem; font-weight:700; color:var(--text); transition:all 0.2s; text-align:center; border-radius:var(--radius-sm); }
+  .quick-action-btn i { font-size:1.2rem; color:var(--navy); }
+  .quick-action-btn:hover { background:#fff; border-color:var(--navy); color:var(--navy); transform:translateY(-2px); box-shadow:var(--shadow-md); }
+
+  /* Notifications */
+  .notif-item { display:flex; align-items:flex-start; gap:0.7rem; padding:0.65rem 0; border-bottom:1px solid var(--border); font-size:0.82rem; }
+  .notif-item:last-child { border-bottom:none; }
+  .notif-dot-lg { width:8px; height:8px; border-radius:50%; flex-shrink:0; margin-top:5px; }
+
+  /* Segment Tabs */
+  .seg-tabs { display:flex; gap:0; border-bottom:2px solid var(--border); margin-bottom:0; }
+  .seg-tab { background:none; border:none; padding:0.65rem 1.1rem; font-family:'Jost',sans-serif; font-size:0.83rem; font-weight:700; color:var(--muted); cursor:pointer; transition:all 0.2s; position:relative; display:flex; align-items:center; gap:0.4rem; }
+  .seg-tab:hover { color:var(--navy); }
+  .seg-tab.active { color:var(--navy); }
+  .seg-tab.active::after { content:''; position:absolute; bottom:-2px; left:0; right:0; height:2px; background:var(--navy); border-radius:2px 2px 0 0; }
+
+  /* Settings Tabs */
+  .settings-tab { }
+
+  /* Tours Catalog */
+  .tours-catalog-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.2rem; }
+  .tour-pkg-card { background:#fff; border:1px solid var(--border); padding:1.5rem; transition:transform 0.2s,box-shadow 0.2s; position:relative; border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+  .tour-pkg-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); }
+  .tour-pkg-card::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--red),var(--gold),var(--green)); border-radius:var(--radius) var(--radius) 0 0; }
+  .tour-pkg-card h4 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:700; margin-bottom:0.4rem; color:var(--dark); }
+  .tour-pkg-price { font-size:1.5rem; font-weight:700; color:var(--navy); font-family:'Cormorant Garamond',serif; }
+  .tour-pkg-meta { font-size:0.78rem; color:var(--muted); margin-top:0.3rem; }
+  .tour-pkg-actions { display:flex; gap:0.5rem; margin-top:1rem; }
+  .tpkg-btn { flex:1; padding:0.55rem; border:1.5px solid var(--border); background:#fff; font-family:'Jost',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s; display:flex; align-items:center; justify-content:center; gap:0.3rem; border-radius:var(--radius-sm); }
+  .tpkg-btn:hover { border-color:var(--navy); color:var(--navy); background:rgba(0,51,102,0.04); }
+  .tpkg-btn.danger:hover { border-color:var(--red); color:var(--red); background:rgba(206,17,38,0.04); }
+
+  /* Reports Grid */
+  .reports-grid { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-top:1.5rem; }
+
+  .tour-pkg-bookings { display:inline-flex; align-items:center; gap:0.3rem; background:rgba(0,107,63,0.08); color:#006B3F; font-size:0.75rem; font-weight:700; padding:3px 9px; margin-top:0.6rem; border-radius:20px; }
+
+  .report-bar-wrap { margin-bottom:1rem; }
+  .report-bar-label { display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:0.4rem; }
+  .report-bar-label span:first-child { font-weight:700; color:var(--dark); }
+  .report-bar-label span:last-child { color:var(--muted); font-weight:500; }
+  .report-bar-track { height:8px; background:#eef0f5; border-radius:4px; overflow:hidden; }
+  .report-bar-fill { height:100%; transition:width 0.6s cubic-bezier(0.16,1,0.3,1); border-radius:4px; }
+
+  .form-group textarea {
+    width:100%; padding:0.85rem 1rem; border:1.5px solid var(--border);
+    font-family:'Jost',sans-serif; font-size:0.9rem; color:var(--dark);
+    outline:none; transition:border-color 0.2s, box-shadow 0.2s; background:var(--white);
+    border-radius:var(--radius-sm); resize:vertical; min-height:80px;
+  }
+
+  .page { display:none; }
+  .page.active { display:block; }
+
+  /* Scrollbar for main content */
+  .main::-webkit-scrollbar { width:6px; }
+  .main::-webkit-scrollbar-track { background:transparent; }
+  .main::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+
+  /* Improved checkbox styling */
+  input[type="checkbox"] { accent-color: var(--navy); }
+
+  /* Tour modal price input left icon */
+  .input-wrap i.fa-dollar-sign { left:0.85rem; right:auto; pointer-events:none; }
+  #tmPrice { padding-left:2rem; }
+
+  /* Tour modal live preview fade */
+  #tmPreviewName { transition: all 0.2s; }
+  #tmPreviewMeta { transition: all 0.2s; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+<!-- ══ SIGN IN PAGE ══ -->
+<div id="signInPage">
+  <div class="auth-wrap">
+    <div class="auth-kente">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="https://res.cloudinary.com/duokkf6tl/image/upload/v1773628247/logo_nhdd5o.png" alt="Logo">
+        <div class="auth-logo-text">
+          <span class="t1">Wi-Ann</span>
+          <span class="t2">Travel & Tour</span>
+        </div>
+      </div>
+      <span class="auth-badge">Admin Portal</span>
+      <h1>Welcome Back</h1>
+      <p class="sub">Sign in to manage your tour bookings and orders.</p>
+      <div class="auth-divider"><span></span><span></span><span></span></div>
+
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="siEmail" placeholder="admin@wiann.com">
+        <div class="err-msg" id="siEmailErr">Please enter a valid email.</div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <input type="password" id="siPassword" placeholder="Enter your password">
+          <i class="fas fa-eye" onclick="togglePass('siPassword', this)"></i>
+        </div>
+        <div class="err-msg" id="siPassErr">Please enter your password.</div>
+      </div>
+      <button class="btn-auth" onclick="handleSignIn()">
+        <i class="fas fa-sign-in-alt"></i> Sign In to Dashboard
+      </button>
+      <p class="auth-switch">Don't have an account? <a onclick="showPage('signUpPage')">Create one</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SIGN UP PAGE ══ -->
+<div id="signUpPage" style="display:none">
+  <div class="auth-wrap">
+    <div class="auth-kente">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="https://res.cloudinary.com/duokkf6tl/image/upload/v1773628247/logo_nhdd5o.png" alt="Logo">
+        <div class="auth-logo-text">
+          <span class="t1">Wi-Ann</span>
+          <span class="t2">Travel & Tour</span>
+        </div>
+      </div>
+      <span class="auth-badge">Create Admin Account</span>
+      <h1>Get Started</h1>
+      <p class="sub">Set up your admin account to manage bookings.</p>
+      <div class="auth-divider"><span></span><span></span><span></span></div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" id="suFirst" placeholder="Kwame">
+          <div class="err-msg" id="suFirstErr">Required.</div>
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" id="suLast" placeholder="Mensah">
+          <div class="err-msg" id="suLastErr">Required.</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="suEmail" placeholder="admin@wiann.com">
+        <div class="err-msg" id="suEmailErr">Enter a valid email.</div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <div class="input-wrap">
+          <input type="password" id="suPassword" placeholder="Min. 6 characters">
+          <i class="fas fa-eye" onclick="togglePass('suPassword', this)"></i>
+        </div>
+        <div class="err-msg" id="suPassErr">Min. 6 characters required.</div>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <div class="input-wrap">
+          <input type="password" id="suConfirm" placeholder="Repeat password">
+          <i class="fas fa-eye" onclick="togglePass('suConfirm', this)"></i>
+        </div>
+        <div class="err-msg" id="suConfirmErr">Passwords do not match.</div>
+      </div>
+      <button class="btn-auth" onclick="handleSignUp()">
+        <i class="fas fa-user-plus"></i> Create Admin Account
+      </button>
+      <p class="auth-switch">Already have an account? <a onclick="showPage('signInPage')">Sign in</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div id="dashboardPage">
+  <!-- Mobile sidebar backdrop -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="https://res.cloudinary.com/duokkf6tl/image/upload/v1773628247/logo_nhdd5o.png" alt="Logo">
+      <div class="sidebar-logo-text">
+        <span class="t1">Wi-Ann</span>
+        <span class="t2">Travel & Tour</span>
+      </div>
+    </div>
+    <div class="sidebar-kente">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <div class="nav-item active" onclick="showSection('overview', this)">
+        <i class="fas fa-th-large" style="color:#FCD116"></i>
+        <span>Overview</span>
+      </div>
+      <div class="nav-item" onclick="showSection('tourorders', this)">
+        <i class="fas fa-ticket-alt" style="color:#FF4DA6"></i>
+        <span>Tour Orders</span>
+        <span class="nav-badge" id="pendingBadge">0</span>
+      </div>
+      <div class="nav-section">Manage</div>
+      <div class="nav-item" onclick="showSection('tours', this)">
+        <i class="fas fa-map-marked-alt" style="color:#006B3F"></i>
+        <span>Tours</span>
+      </div>
+      <div class="nav-item" onclick="showSection('customers', this)">
+        <i class="fas fa-users" style="color:#5b9bd5"></i>
+        <span>Customers</span>
+      </div>
+      <div class="nav-section">System</div>
+      <div class="nav-item" onclick="showSection('reports', this)">
+        <i class="fas fa-chart-line" style="color:#FCD116"></i>
+        <span>Reports</span>
+      </div>
+      <div class="nav-item" onclick="showSection('settings', this)">
+        <i class="fas fa-cog" style="color:rgba(255,255,255,0.5)"></i>
+        <span>Settings</span>
+      </div>
+      <div style="height:1px;background:rgba(255,255,255,0.08);margin:0.5rem 0.75rem;"></div>
+      <div class="nav-section">Frontend</div>
+      <a href="https://kay630.github.io/Ghana-Tour/" target="_blank" class="nav-item" style="text-decoration:none;">
+        <i class="fas fa-home" style="color:#5b9bd5"></i>
+        <span>Homepage</span>
+        <i class="fas fa-external-link-alt" style="font-size:0.6rem;margin-left:auto;opacity:0.4;width:auto;"></i>
+      </a>
+      <a href="https://kay630.github.io/Ghana-Tour/tours.html" target="_blank" class="nav-item" style="text-decoration:none;">
+        <i class="fas fa-map-marked-alt" style="color:#006B3F"></i>
+        <span>Tours Page</span>
+        <i class="fas fa-external-link-alt" style="font-size:0.6rem;margin-left:auto;opacity:0.4;width:auto;"></i>
+      </a>
+      <a href="https://kay630.github.io/Ghana-Tour/gallery.html" target="_blank" class="nav-item" style="text-decoration:none;">
+        <i class="fas fa-images" style="color:#FCD116"></i>
+        <span>Gallery</span>
+        <i class="fas fa-external-link-alt" style="font-size:0.6rem;margin-left:auto;opacity:0.4;width:auto;"></i>
+      </a>
+      <a href="https://kay630.github.io/Ghana-Tour/blog.html" target="_blank" class="nav-item" style="text-decoration:none;">
+        <i class="fas fa-newspaper" style="color:#FF4DA6"></i>
+        <span>Blog</span>
+        <i class="fas fa-external-link-alt" style="font-size:0.6rem;margin-left:auto;opacity:0.4;width:auto;"></i>
+      </a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-avatar" id="sidebarAvatar">A</div>
+      <div class="user-info">
+        <div class="name" id="sidebarName">Admin</div>
+        <div class="role">Administrator</div>
+      </div>
+      <button class="btn-logout" onclick="handleLogout()" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <div class="main">
+    <header class="topbar">
+      <div style="display:flex;align-items:center;gap:1rem;">
+        <button class="mob-toggle" id="mobToggle" onclick="toggleSidebar()">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+        <div class="topbar-left">
+          <h2 id="topbarTitle">Dashboard Overview</h2>
+          <p id="topbarGreeting">Good morning, Admin</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="topbar-date" id="topbarDate"></span>
+        <div class="topbar-notif">
+          <i class="fas fa-bell"></i>
+          <span class="notif-dot"></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+
+      <!-- ── Domain Notice Banner ── -->
+      <!-- ══ OVERVIEW PAGE ══ -->
+      <div id="sec-overview" class="dash-section">
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-ticket-alt"></i></div>
+            <div class="stat-value" id="statTotal">0</div>
+            <div class="stat-label">Total Bookings</div>
+            <div class="stat-change up" id="statTotalChange">— bookings total</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+            <div class="stat-value" id="statRevenue">$0</div>
+            <div class="stat-label">Total Revenue</div>
+            <div class="stat-change up">From confirmed orders</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+            <div class="stat-value" id="statPending">0</div>
+            <div class="stat-label">Pending Orders</div>
+            <div class="stat-change down" id="statPendingNote">Needs review</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon"><i class="fas fa-users"></i></div>
+            <div class="stat-value" id="statPax">0</div>
+            <div class="stat-label">Total Travellers</div>
+            <div class="stat-change up">Across all tours</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions + Notifications -->
+        <div class="overview-grid">
+          <div class="dash-card">
+            <div class="dash-card-title"><i class="fas fa-bolt" style="color:var(--gold)"></i> Quick Actions</div>
+            <div class="quick-actions-grid">
+              <button class="quick-action-btn" onclick="openAddOrder()"><i class="fas fa-plus-circle"></i><span>Add New Order</span></button>
+              <button class="quick-action-btn" onclick="navTo('tours')"><i class="fas fa-map-marked-alt"></i><span>Manage Tours</span></button>
+              <button class="quick-action-btn" onclick="navTo('customers')"><i class="fas fa-users"></i><span>View Customers</span></button>
+              <button class="quick-action-btn" onclick="navTo('reports')"><i class="fas fa-chart-line"></i><span>View Reports</span></button>
+              <button class="quick-action-btn" onclick="exportPDF('overview')"><i class="fas fa-file-pdf" style="color:#CE1126"></i><span>Export PDF</span></button>
+              <button class="quick-action-btn" onclick="exportCSV('overview')"><i class="fas fa-file-csv" style="color:#006B3F"></i><span>Export CSV</span></button>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-title"><i class="fas fa-bell" style="color:var(--pink)"></i> Notifications</div>
+            <div id="notificationsList"></div>
+          </div>
+        </div>
+
+        <!-- Recent Bookings -->
+        <div class="section-header">
+          <div><h3>Recent Bookings</h3><p>Latest orders at a glance</p></div>
+          <div class="export-wrap">
+            <button class="btn-export" onclick="toggleExportMenu('exportMenu1')"><i class="fas fa-download"></i> Export <i class="fas fa-chevron-down" style="font-size:0.7rem;margin-left:2px;"></i></button>
+            <div class="export-dropdown" id="exportMenu1">
+              <button class="export-opt" onclick="exportCSV('overview');toggleExportMenu('exportMenu1')"><i class="fas fa-file-csv" style="color:#006B3F"></i> Export CSV</button>
+              <button class="export-opt" onclick="exportPDF('overview');toggleExportMenu('exportMenu1')"><i class="fas fa-file-pdf" style="color:#CE1126"></i> Export PDF</button>
+            </div>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table class="orders-table"><thead><tr><th>Ref #</th><th>Customer</th><th>Tour</th><th>Date</th><th>Pax</th><th>Amount</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="ordersTableBody"></tbody></table>
+          <div id="emptyState" class="empty-state" style="display:none"><i class="fas fa-inbox"></i><p>No orders yet.</p></div>
+          <div class="pagination"><span class="pag-info" id="pagInfo">Showing 0 of 0 orders</span><div class="pag-btns" id="pagBtns"></div></div>
+        </div>
+      </div><!-- end sec-overview -->
+
+      <!-- ══ TOUR ORDERS PAGE ══ -->
+      <div id="sec-tourorders" class="dash-section" style="display:none">
+        <div class="section-header" style="margin-bottom:1.5rem">
+          <div><h3>Tour Orders</h3><p>Manage and track all incoming bookings</p></div>
+          <div style="display:flex;gap:0.6rem;align-items:center;">
+            <button class="add-order-btn" onclick="openAddOrder()"><i class="fas fa-plus"></i> Add Order</button>
+            <div class="export-wrap">
+              <button class="btn-export" onclick="toggleExportMenu('exportMenu2')"><i class="fas fa-download"></i> Export <i class="fas fa-chevron-down" style="font-size:0.7rem;margin-left:2px;"></i></button>
+              <div class="export-dropdown" id="exportMenu2">
+                <button class="export-opt" onclick="exportCSV('tourorders');toggleExportMenu('exportMenu2')"><i class="fas fa-file-csv" style="color:#006B3F"></i> Export CSV</button>
+                <button class="export-opt" onclick="exportPDF('tourorders');toggleExportMenu('exportMenu2')"><i class="fas fa-file-pdf" style="color:#CE1126"></i> Export PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="table-toolbar">
+          <div class="search-wrap"><i class="fas fa-search"></i><input type="text" placeholder="Search name, tour, ref, email…" oninput="filterOrders2(this.value)"></div>
+          <select class="filter-select" onchange="filterByStatus2(this.value)">
+            <option value="">All Statuses</option><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="completed">Completed</option><option value="cancelled">Cancelled</option>
+          </select>
+          <select class="filter-select" onchange="filterByTour2(this.value)" id="tourFilter2"><option value="">All Tours</option></select>
+          <input type="date" class="filter-select" id="filterDate" onchange="filterByDate2(this.value)" title="Filter by travel date">
+        </div>
+        <div class="table-wrap">
+          <table class="orders-table"><thead><tr><th>Ref #</th><th>Customer</th><th>Tour</th><th>Date</th><th>Pax</th><th>Amount</th><th>Payment</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="ordersTableBody2"></tbody></table>
+          <div id="emptyState2" class="empty-state" style="display:none"><i class="fas fa-inbox"></i><p>No orders found.</p></div>
+          <div class="pagination"><span class="pag-info" id="pagInfo2">Showing 0 of 0 orders</span><div class="pag-btns" id="pagBtns2"></div></div>
+        </div>
+      </div>
+
+      <!-- ══ TOURS PAGE ══ -->
+      <div id="sec-tours" class="dash-section" style="display:none">
+        <div class="section-header" style="margin-bottom:1.5rem">
+          <div><h3>Manage Tours</h3><p>Your full tour catalogue — bookings, revenue and capacity at a glance</p></div>
+          <button class="add-order-btn" onclick="openAddTourModal()"><i class="fas fa-plus"></i> Add New Tour</button>
+        </div>
+        <div class="tours-catalog-grid" id="toursGrid"></div>
+      </div>
+
+      <!-- ══ CUSTOMERS PAGE ══ -->
+      <div id="sec-customers" class="dash-section" style="display:none">
+        <div class="section-header" style="margin-bottom:1.5rem">
+          <div><h3>Customers</h3><p>Every traveller who has made a booking with Wi-Ann</p></div>
+        </div>
+        <!-- Segment tabs -->
+        <div class="seg-tabs" id="segTabs">
+          <button class="seg-tab active" onclick="setSegment('all',this)">All Customers</button>
+          <button class="seg-tab" onclick="setSegment('vip',this)"><i class="fas fa-star" style="color:var(--gold);font-size:0.75rem"></i> VIP (3+ bookings)</button>
+          <button class="seg-tab" onclick="setSegment('first',this)">First-Time</button>
+          <button class="seg-tab" onclick="setSegment('repeat',this)">Repeat Travellers</button>
+        </div>
+        <div class="table-toolbar" style="margin-top:0.8rem">
+          <div class="search-wrap"><i class="fas fa-search"></i><input type="text" placeholder="Search by name or email…" oninput="filterCustomers(this.value)"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="customers-table"><thead><tr><th>Customer</th><th>Phone</th><th>Segment</th><th>Tours Booked</th><th>Total Spent</th><th>Last Booking</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="customersTableBody"></tbody></table>
+          <div id="custEmpty" class="empty-state" style="display:none"><i class="fas fa-users"></i><p>No customers yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ══ REPORTS PAGE ══ -->
+      <div id="sec-reports" class="dash-section" style="display:none">
+        <div class="section-header" style="margin-bottom:1.5rem">
+          <div><h3>Reports</h3><p>Sales, performance and customer insights</p></div>
+          <div class="export-wrap">
+            <button class="btn-export" onclick="toggleExportMenu('exportMenu3')"><i class="fas fa-download"></i> Export <i class="fas fa-chevron-down" style="font-size:0.7rem;margin-left:2px;"></i></button>
+            <div class="export-dropdown" id="exportMenu3">
+              <button class="export-opt" onclick="exportCSV('reports');toggleExportMenu('exportMenu3')"><i class="fas fa-file-csv" style="color:#006B3F"></i> Export CSV</button>
+              <button class="export-opt" onclick="exportPDF('reports');toggleExportMenu('exportMenu3')"><i class="fas fa-file-pdf" style="color:#CE1126"></i> Export PDF</button>
+            </div>
+          </div>
+        </div>
+        <div class="stats-grid" id="reportsStats"></div>
+        <div class="reports-grid">
+          <div class="dash-card">
+            <div class="dash-card-title"><i class="fas fa-map-marked-alt" style="color:var(--green)"></i> Bookings by Tour</div>
+            <div id="reportsByTour"></div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-title"><i class="fas fa-circle" style="color:var(--navy)"></i> Bookings by Status</div>
+            <div id="reportsByStatus"></div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-title"><i class="fas fa-credit-card" style="color:var(--pink)"></i> Payment Methods</div>
+            <div id="reportsByPayment"></div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-card-title"><i class="fas fa-users" style="color:var(--gold)"></i> Customer Insights</div>
+            <div id="reportsCustomerInsights"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SETTINGS PAGE ══ -->
+      <div id="sec-settings" class="dash-section" style="display:none">
+        <div class="section-header" style="margin-bottom:1.5rem">
+          <div><h3>Settings</h3><p>Account, business, payment and system preferences</p></div>
+        </div>
+        <!-- Settings tabs -->
+        <div class="seg-tabs" style="margin-bottom:1.5rem" id="settingsTabs">
+          <button class="seg-tab active" onclick="setSettingsTab('profile',this)"><i class="fas fa-user"></i> Profile</button>
+          <button class="seg-tab" onclick="setSettingsTab('business',this)"><i class="fas fa-building"></i> Business</button>
+          <button class="seg-tab" onclick="setSettingsTab('payment',this)"><i class="fas fa-credit-card"></i> Payment</button>
+          <button class="seg-tab" onclick="setSettingsTab('policies',this)"><i class="fas fa-file-alt"></i> Policies</button>
+          <button class="seg-tab" onclick="setSettingsTab('system',this)"><i class="fas fa-cog"></i> System</button>
+        </div>
+
+        <!-- Profile Tab -->
+        <div id="stab-profile" class="settings-tab">
+          <div class="settings-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-id-card" style="color:var(--navy)"></i> Profile Information</div>
+              <div class="form-row">
+                <div class="form-group"><label>First Name</label><input type="text" id="setFirst" placeholder="First name"></div>
+                <div class="form-group"><label>Last Name</label><input type="text" id="setLast" placeholder="Last name"></div>
+              </div>
+              <div class="form-group"><label>Email Address</label><input type="email" id="setEmail" placeholder="Email"></div>
+              <div class="form-group"><label>Role</label><input type="text" value="Administrator" disabled style="background:#f8f8f8;color:#999;cursor:not-allowed;"></div>
+              <button class="btn-auth" style="margin-top:0.5rem" onclick="saveProfile()"><i class="fas fa-save"></i> Save Profile</button>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-lock" style="color:var(--red)"></i> Change Password</div>
+              <div class="form-group"><label>Current Password</label><input type="password" id="setCurrPass" placeholder="Current password"></div>
+              <div class="form-group"><label>New Password</label><input type="password" id="setNewPass" placeholder="Min. 6 characters"></div>
+              <div class="form-group"><label>Confirm New Password</label><input type="password" id="setConfPass" placeholder="Repeat new password"></div>
+              <button class="btn-auth" style="margin-top:0.5rem" onclick="changePassword()"><i class="fas fa-lock"></i> Update Password</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Business Tab -->
+        <div id="stab-business" class="settings-tab" style="display:none">
+          <div class="settings-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-building" style="color:var(--navy)"></i> Company Information</div>
+              <div class="form-group"><label>Business Name</label><input type="text" id="setBizName" value="Wi-Ann Travel &amp; Tour"></div>
+              <div class="form-group"><label>Contact Email</label><input type="email" id="setBizEmail" placeholder="info@wiann.com"></div>
+              <div class="form-group"><label>Phone Number</label><input type="tel" id="setBizPhone" placeholder="+233 XX XXX XXXX"></div>
+              <div class="form-group"><label>Website</label><input type="url" id="setBizWeb" placeholder="https://wiann.com"></div>
+              <button class="btn-auth" style="margin-top:0.5rem" onclick="saveBizInfo()"><i class="fas fa-save"></i> Save Business Info</button>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-map-marker-alt" style="color:var(--green)"></i> Location & Localisation</div>
+              <div class="form-group"><label>Country</label><input type="text" value="Ghana" id="setBizCountry"></div>
+              <div class="form-group"><label>Time Zone</label><select id="setBizTZ"><option>GMT+0 (Accra)</option><option>GMT+1</option><option>GMT-5 (EST)</option></select></div>
+              <div class="form-group"><label>Currency</label><select id="setBizCurrency"><option>USD – US Dollar</option><option>GHS – Ghanaian Cedi</option><option>GBP – British Pound</option></select></div>
+              <div class="form-group"><label>Language</label><select id="setBizLang"><option>English</option><option>French</option><option>Twi</option></select></div>
+              <button class="btn-auth" style="margin-top:0.5rem" onclick="showToast('Localisation saved!','success')"><i class="fas fa-save"></i> Save</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Tab -->
+        <div id="stab-payment" class="settings-tab" style="display:none">
+          <div class="settings-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-credit-card" style="color:var(--navy)"></i> Payment Gateways</div>
+              <div class="form-group"><label>Paystack Public Key</label><input type="text" id="setPaystack" placeholder="pk_live_..."></div>
+              <div class="form-group"><label>Stripe Public Key</label><input type="text" id="setStripe" placeholder="pk_live_..."></div>
+              <div class="form-group"><label>Accepted Methods</label>
+                <div style="display:flex;flex-direction:column;gap:0.4rem;margin-top:0.3rem;">
+                  <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;font-weight:400;text-transform:none;letter-spacing:0;"><input type="checkbox" checked> Visa / Mastercard</label>
+                  <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;font-weight:400;text-transform:none;letter-spacing:0;"><input type="checkbox" checked> MTN Mobile Money</label>
+                  <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;font-weight:400;text-transform:none;letter-spacing:0;"><input type="checkbox" checked> Vodafone Cash</label>
+                  <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;font-weight:400;text-transform:none;letter-spacing:0;"><input type="checkbox"> Bank Transfer</label>
+                </div>
+              </div>
+              <button class="btn-auth" style="margin-top:0.5rem" onclick="showToast('Payment settings saved!','success')"><i class="fas fa-save"></i> Save</button>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-undo" style="color:var(--red)"></i> Refund Policy</div>
+              <div class="form-group"><label>Full Refund Window (days before tour)</label><input type="number" value="14" min="0"></div>
+              <div class="form-group"><label>Partial Refund (% returned)</label><input type="number" value="50" min="0" max="100"></div>
+              <div class="form-group"><label>No Refund Window (days before tour)</label><input type="number" value="3" min="0"></div>
+              <div class="form-group"><label>Refund Notes</label><textarea rows="3" placeholder="Additional refund policy notes…"></textarea></div>
+              <button class="btn-auth" style="margin-top:0.5rem" onclick="showToast('Refund policy saved!','success')"><i class="fas fa-save"></i> Save Policy</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Policies Tab -->
+        <div id="stab-policies" class="settings-tab" style="display:none">
+          <div class="settings-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-file-contract" style="color:var(--navy)"></i> Cancellation Policy</div>
+              <div class="form-group"><label>Policy Title</label><input type="text" value="Wi-Ann Cancellation Policy"></div>
+              <div class="form-group"><label>Policy Text</label><textarea rows="6" placeholder="Full cancellation policy text…">Cancellations made 14+ days before the tour date will receive a full refund. Cancellations within 3–13 days receive a 50% refund. No refunds within 72 hours of departure.</textarea></div>
+              <button class="btn-auth" style="margin-top:0.5rem" onclick="showToast('Policy saved!','success')"><i class="fas fa-save"></i> Save Policy</button>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-scroll" style="color:var(--green)"></i> Terms & Conditions</div>
+              <div class="form-group"><label>Terms Text</label><textarea rows="9" placeholder="Full terms and conditions…">By booking with Wi-Ann Travel &amp; Tour, customers agree to our terms of service, privacy policy, and travel conditions as outlined at the time of booking.</textarea></div>
+              <button class="btn-auth" style="margin-top:0.5rem" onclick="showToast('Terms saved!','success')"><i class="fas fa-save"></i> Save Terms</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Tab -->
+        <div id="stab-system" class="settings-tab" style="display:none">
+          <div class="settings-2col" style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;">
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-users-cog" style="color:var(--navy)"></i> User Roles & Permissions</div>
+              <div class="form-group"><label>Admin Email</label><input type="email" id="roleAdmin" placeholder="admin@wiann.com"></div>
+              <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.8rem;">Admins have full access. Assign staff roles to limit permissions.</p>
+              <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem;background:var(--light);font-size:0.83rem;">
+                  <span><i class="fas fa-user-tie" style="color:var(--navy);margin-right:0.4rem;"></i> Administrator</span>
+                  <span class="status-badge confirmed">Full Access</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem;background:var(--light);font-size:0.83rem;">
+                  <span><i class="fas fa-user" style="color:var(--green);margin-right:0.4rem;"></i> Staff</span>
+                  <span class="status-badge pending">View & Edit Orders</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:0.6rem;background:var(--light);font-size:0.83rem;">
+                  <span><i class="fas fa-hiking" style="color:var(--muted);margin-right:0.4rem;"></i> Tour Guide</span>
+                  <span class="status-badge completed">View Only</span>
+                </div>
+              </div>
+            </div>
+            <div class="dash-card">
+              <div class="dash-card-title"><i class="fas fa-robot" style="color:var(--green)"></i> Automation</div>
+              <div style="display:flex;flex-direction:column;gap:0.7rem;">
+                <label style="display:flex;align-items:center;justify-content:space-between;font-size:0.85rem;">
+                  <span><i class="fas fa-envelope" style="color:var(--navy);margin-right:0.5rem;"></i> Auto-confirmation emails</span>
+                  <input type="checkbox" checked style="width:16px;height:16px;cursor:pointer;">
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;font-size:0.85rem;">
+                  <span><i class="fas fa-bell" style="color:var(--gold);margin-right:0.5rem;"></i> Payment reminders</span>
+                  <input type="checkbox" checked style="width:16px;height:16px;cursor:pointer;">
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;font-size:0.85rem;">
+                  <span><i class="fab fa-whatsapp" style="color:#25D366;margin-right:0.5rem;"></i> WhatsApp notifications</span>
+                  <input type="checkbox" style="width:16px;height:16px;cursor:pointer;">
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;font-size:0.85rem;">
+                  <span><i class="fas fa-calendar-check" style="color:var(--green);margin-right:0.5rem;"></i> Tour reminders (24h before)</span>
+                  <input type="checkbox" checked style="width:16px;height:16px;cursor:pointer;">
+                </label>
+              </div>
+              <button class="btn-auth" style="margin-top:1rem" onclick="showToast('Automation settings saved!','success')"><i class="fas fa-save"></i> Save</button>
+            </div>
+            <div class="dash-card" style="border-color:#fde8eb;border-radius:var(--radius);">
+              <div class="dash-card-title" style="color:var(--red)"><i class="fas fa-exclamation-triangle"></i> Danger Zone</div>
+              <p style="font-size:0.83rem;color:var(--muted);margin-bottom:1rem;">These actions are permanent and cannot be undone.</p>
+              <button onclick="clearAllOrders()" style="width:100%;padding:0.8rem;background:#fff;border:1.5px solid var(--red);color:var(--red);font-family:'Jost',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;margin-bottom:0.6rem;transition:all 0.2s;border-radius:var(--radius-sm);" onmouseover="this.style.background='#CE1126';this.style.color='#fff'" onmouseout="this.style.background='#fff';this.style.color='#CE1126'"><i class="fas fa-trash"></i> Clear All Orders</button>
+              <button onclick="handleLogout()" style="width:100%;padding:0.8rem;background:#fff;border:1.5px solid var(--border);color:var(--muted);font-family:'Jost',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;transition:all 0.2s;border-radius:var(--radius-sm);" onmouseover="this.style.borderColor='#333';this.style.color='#333'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end .content -->
+  </div><!-- end .main -->
+</div><!-- end #dashboardPage -->
+
+<!-- ══ ORDER DETAIL MODAL ══ -->
+<div class="overlay" id="detailOverlay">
+  <div class="detail-modal">
+    <div class="detail-modal-kente">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="detail-body">
+      <div class="detail-header">
+        <div>
+          <div style="font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem;">Booking Reference</div>
+          <div class="detail-ref" id="dRef">—</div>
+        </div>
+        <button class="modal-close-btn" onclick="closeDetail()">✕</button>
+      </div>
+      <div class="detail-section">
+        <h4>Customer Information</h4>
+        <div class="detail-row"><span>Full Name</span><span id="dName">—</span></div>
+        <div class="detail-row"><span>Email</span><span id="dEmail">—</span></div>
+        <div class="detail-row"><span>Phone</span><span id="dPhone">—</span></div>
+      </div>
+      <div class="detail-section">
+        <h4>Booking Details</h4>
+        <div class="detail-row"><span>Tour</span><span id="dTour">—</span></div>
+        <div class="detail-row"><span>Travel Date</span><span id="dDate">—</span></div>
+        <div class="detail-row"><span>Participants</span><span id="dPax">—</span></div>
+        <div class="detail-row"><span>Payment Method</span><span id="dPay">—</span></div>
+        <div class="detail-row"><span>Special Requests</span><span id="dRequests" style="max-width:200px;text-align:right;">—</span></div>
+        <div class="detail-row"><span>Booking Source</span><span id="dSource">—</span></div>
+      </div>
+      <div class="detail-total">
+        <span>Total Amount</span>
+        <span id="dTotal">—</span>
+      </div>
+      <div class="detail-section" style="margin-top:1.2rem">
+        <h4>Update Status</h4>
+        <div style="display:flex;gap:0.6rem;align-items:center;">
+          <select class="status-select" id="dStatusSelect">
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <button class="btn-save-status" onclick="saveStatus()">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD ORDER MODAL ══ -->
+<div class="overlay" id="addOrderOverlay">
+  <div class="detail-modal">
+    <div class="detail-modal-kente">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="detail-body">
+      <div class="detail-header">
+        <div>
+          <div style="font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem;">Manual Entry</div>
+          <div class="detail-ref">Add New Order</div>
+        </div>
+        <button class="modal-close-btn" onclick="closeAddOrder()">✕</button>
+      </div>
+      <div class="form-row">
+        <div class="form-group"><label>First Name</label><input type="text" id="aoFirst" placeholder="Kwame"></div>
+        <div class="form-group"><label>Last Name</label><input type="text" id="aoLast" placeholder="Mensah"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" id="aoEmail" placeholder="customer@email.com"></div>
+      <div class="form-group"><label>Phone</label><input type="tel" id="aoPhone" placeholder="+233 XX XXX XXXX"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Tour</label>
+          <select id="aoTour">
+            <option value="accra">Accra City & Culture ($799)</option>
+            <option value="cape-coast">Cape Coast & Slave Route ($899)</option>
+            <option value="volta">Volta Region Adventure ($950)</option>
+            <option value="kumasi">Kumasi & Ashanti Kingdom ($849)</option>
+            <option value="mole">Mole National Park Safari ($1,099)</option>
+            <option value="luxury">Luxury Ghana Circuit ($2,499)</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Travel Date</label><input type="date" id="aoDate"></div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Participants</label>
+          <select id="aoPax">
+            <option value="1">1</option><option value="2">2</option>
+            <option value="3">3</option><option value="4">4</option><option value="5">5</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="aoPay">
+            <option value="Card Payment">Card Payment</option>
+            <option value="Mobile Money">Mobile Money</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group"><label>Special Requests</label><input type="text" id="aoRequests" placeholder="Optional"></div>
+      <button class="btn-auth" onclick="saveNewOrder()"><i class="fas fa-plus"></i> Add Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADD / EDIT TOUR MODAL ══ -->
+<div class="overlay" id="tourModalOverlay">
+  <div class="detail-modal" style="max-width:560px;">
+    <div class="detail-modal-kente">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <div class="detail-body">
+      <div class="detail-header">
+        <div>
+          <div style="font-size:0.7rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:0.3rem;" id="tourModalEyebrow">Tour Catalogue</div>
+          <div class="detail-ref" id="tourModalTitle">Add New Tour</div>
+        </div>
+        <button class="modal-close-btn" onclick="closeTourModal()">✕</button>
+      </div>
+
+      <input type="hidden" id="tourModalEditIdx" value="-1">
+
+      <div class="form-row">
+        <div class="form-group" style="grid-column:1/-1;">
+          <label>Tour Name</label>
+          <input type="text" id="tmName" placeholder="e.g. Cape Coast & Slave Route">
+          <div class="err-msg" id="tmNameErr">Please enter a tour name.</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Price per Person (USD)</label>
+          <div class="input-wrap">
+            <input type="number" id="tmPrice" placeholder="e.g. 350" min="1" style="padding-left:2rem;">
+            <i class="fas fa-dollar-sign" style="left:0.85rem;right:auto;pointer-events:none;color:var(--muted);font-size:0.8rem;"></i>
+          </div>
+          <div class="err-msg" id="tmPriceErr">Please enter a valid price.</div>
+        </div>
+        <div class="form-group">
+          <label>Max Participants</label>
+          <input type="number" id="tmMaxPax" placeholder="e.g. 12" min="1">
+          <div class="err-msg" id="tmMaxPaxErr">Please enter a number.</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Duration</label>
+        <input type="text" id="tmDuration" placeholder="e.g. 3 Days / 2 Nights">
+      </div>
+
+      <div class="form-group">
+        <label>Short Description</label>
+        <textarea id="tmDesc" rows="3" placeholder="Brief overview of this tour experience…"></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>Region / Location</label>
+          <input type="text" id="tmRegion" placeholder="e.g. Central Region">
+        </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select id="tmStatus">
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Summary preview -->
+      <div style="background:var(--light);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1rem 1.1rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem;">
+        <div style="width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--green),#00a85a);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+          <i class="fas fa-map-marked-alt" style="color:#fff;font-size:1rem;"></i>
+        </div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:0.88rem;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" id="tmPreviewName">Tour name preview</div>
+          <div style="font-size:0.78rem;color:var(--muted);margin-top:2px;" id="tmPreviewMeta">$0 / person · 0 max pax</div>
+        </div>
+        <span class="status-badge confirmed" id="tmPreviewStatus">Active</span>
+      </div>
+
+      <button class="btn-auth" id="tourModalSaveBtn" onclick="saveTourModal()">
+        <i class="fas fa-plus-circle"></i> <span id="tourModalBtnLabel">Add Tour</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  // ── DATA ──
+  const TOUR_PRICES = {
+    'accra': { name:'Accra City & Culture Tour', price:799 },
+    'cape-coast': { name:'Cape Coast & Slave Route', price:899 },
+    'volta': { name:'Volta Region Adventure', price:950 },
+    'kumasi': { name:'Kumasi & Ashanti Kingdom', price:849 },
+    'mole': { name:'Mole National Park Safari', price:1099 },
+    'luxury': { name:'Luxury Ghana Circuit', price:2499 },
+  };
+  const AVATAR_COLORS = ['#006B3F','#CE1126','#003366','#8B4513','#1a6b8a','#7B2D8B'];
+
+  let orders = JSON.parse(localStorage.getItem('wiann_orders') || '[]');
+  let admins = JSON.parse(localStorage.getItem('wiann_admins') || '[]');
+  let currentAdmin = JSON.parse(localStorage.getItem('wiann_current_admin') || 'null');
+  let currentDetailRef = null;
+  let filterText = '';
+  let filterStatus = '';
+  let filterTour = '';
+  let currentPage = 1;
+  const PER_PAGE = 10;
+
+  // Seed demo orders if empty
+  if (orders.length === 0) {
+    const demos = [
+      { ref:'GT-DEMO01', firstName:'Ama', lastName:'Owusu', email:'ama@email.com', phone:'+233 24 111 2222', tour:'accra', tourName:'Accra City & Culture Tour', date:'2025-03-15', participants:2, payMethod:'Card Payment', requests:'Vegetarian meals', status:'confirmed', total:'$1,598.00', createdAt: new Date().toISOString() },
+      { ref:'GT-DEMO02', firstName:'Kofi', lastName:'Asante', email:'kofi@email.com', phone:'+233 20 333 4444', tour:'mole', tourName:'Mole National Park Safari', date:'2025-04-02', participants:3, payMethod:'Mobile Money', requests:'', status:'pending', total:'$3,297.00', createdAt: new Date().toISOString() },
+      { ref:'GT-DEMO03', firstName:'Abena', lastName:'Boateng', email:'abena@email.com', phone:'+44 7700 900123', tour:'luxury', tourName:'Luxury Ghana Circuit', date:'2025-05-10', participants:2, payMethod:'Card Payment', requests:'Anniversary trip', status:'confirmed', total:'$4,998.00', createdAt: new Date().toISOString() },
+      { ref:'GT-DEMO04', firstName:'James', lastName:'Fletcher', email:'james@email.com', phone:'+1 555 678 9012', tour:'cape-coast', tourName:'Cape Coast & Slave Route', date:'2025-03-28', participants:4, payMethod:'Card Payment', requests:'Historical focus', status:'completed', total:'$3,596.00', createdAt: new Date().toISOString() },
+      { ref:'GT-DEMO05', firstName:'Akosua', lastName:'Mensah', email:'akosua@email.com', phone:'+233 27 555 6666', tour:'volta', tourName:'Volta Region Adventure', date:'2025-04-18', participants:1, payMethod:'Mobile Money', requests:'', status:'pending', total:'$950.00', createdAt: new Date().toISOString() },
+    ];
+    orders = demos;
+    saveOrders();
+  }
+
+  // ── AUTH ──
+  function showPage(id) {
+    ['signInPage','signUpPage','dashboardPage'].forEach(p => {
+      const el = document.getElementById(p);
+      if (el) el.style.display = p === id ? (id === 'dashboardPage' ? 'block' : 'block') : 'none';
+    });
+  }
+
+  function handleSignIn() {
+    const email = document.getElementById('siEmail').value.trim();
+    const pass  = document.getElementById('siPassword').value;
+    let valid = true;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('siEmail').classList.add('error');
+      document.getElementById('siEmailErr').classList.add('show');
+      valid = false;
+    } else { document.getElementById('siEmail').classList.remove('error'); document.getElementById('siEmailErr').classList.remove('show'); }
+    if (!pass) {
+      document.getElementById('siPassword').classList.add('error');
+      document.getElementById('siPassErr').classList.add('show');
+      valid = false;
+    } else { document.getElementById('siPassword').classList.remove('error'); document.getElementById('siPassErr').classList.remove('show'); }
+    if (!valid) return;
+
+    const found = admins.find(a => a.email === email && a.password === pass);
+    if (!found) { showToast('Invalid email or password.', 'error'); return; }
+    currentAdmin = found;
+    localStorage.setItem('wiann_current_admin', JSON.stringify(found));
+    loadDashboard();
+  }
+
+  function handleSignUp() {
+    const first = document.getElementById('suFirst').value.trim();
+    const last  = document.getElementById('suLast').value.trim();
+    const email = document.getElementById('suEmail').value.trim();
+    const pass  = document.getElementById('suPassword').value;
+    const conf  = document.getElementById('suConfirm').value;
+    let valid = true;
+
+    const checks = [
+      { id:'suFirst', err:'suFirstErr', ok: first.length > 1 },
+      { id:'suLast',  err:'suLastErr',  ok: last.length > 1 },
+      { id:'suEmail', err:'suEmailErr', ok: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) },
+      { id:'suPassword', err:'suPassErr', ok: pass.length >= 6 },
+      { id:'suConfirm', err:'suConfirmErr', ok: pass === conf && conf.length > 0 },
+    ];
+    checks.forEach(c => {
+      const el = document.getElementById(c.id); const err = document.getElementById(c.err);
+      if (!c.ok) { el.classList.add('error'); err.classList.add('show'); valid = false; }
+      else { el.classList.remove('error'); err.classList.remove('show'); }
+    });
+    if (!valid) return;
+    if (admins.find(a => a.email === email)) { showToast('Email already registered.', 'error'); return; }
+
+    const admin = { firstName:first, lastName:last, email, password:pass };
+    admins.push(admin);
+    localStorage.setItem('wiann_admins', JSON.stringify(admins));
+    currentAdmin = admin;
+    localStorage.setItem('wiann_current_admin', JSON.stringify(admin));
+    showToast('Account created! Welcome.', 'success');
+    loadDashboard();
+  }
+
+  function handleLogout() {
+    currentAdmin = null;
+    localStorage.removeItem('wiann_current_admin');
+    showPage('signInPage');
+  }
+
+  // ── DASHBOARD ──
+  function loadDashboard() {
+    showPage('dashboardPage');
+    const name = currentAdmin.firstName + ' ' + currentAdmin.lastName;
+    document.getElementById('sidebarName').textContent = name;
+    document.getElementById('sidebarAvatar').textContent = currentAdmin.firstName[0].toUpperCase();
+    const hr = new Date().getHours();
+    const greet = hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening';
+    document.getElementById('topbarGreeting').textContent = `${greet}, ${currentAdmin.firstName}`;
+    document.getElementById('topbarDate').textContent = new Date().toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'long', year:'numeric' });
+    updateStats();
+    populateTourFilter();
+    renderOrders();
+    renderNotifications();
+  }
+
+  function updateStats() {
+    const total = orders.length;
+    const pending = orders.filter(o => o.status === 'pending').length;
+    const confirmed = orders.filter(o => o.status === 'confirmed' || o.status === 'completed');
+    const revenue = confirmed.reduce((s, o) => s + parseFloat(o.total.replace(/[$,]/g,'')), 0);
+    const pax = orders.reduce((s, o) => s + (parseInt(o.participants) || 1), 0);
+
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statRevenue').textContent = '$' + revenue.toLocaleString('en-US', {minimumFractionDigits:0});
+    document.getElementById('statPending').textContent = pending;
+    document.getElementById('statPax').textContent = pax;
+    document.getElementById('statTotalChange').textContent = `${total} total booking${total !== 1 ? 's' : ''}`;
+    document.getElementById('statPendingNote').textContent = pending > 0 ? `${pending} need${pending === 1 ? 's' : ''} review` : 'All clear';
+    document.getElementById('pendingBadge').textContent = pending;
+    document.getElementById('pendingBadge').style.display = pending > 0 ? '' : 'none';
+  }
+
+  function populateTourFilter() {
+    const sel = document.getElementById('tourFilter');
+    if (!sel) return;
+    const names = [...new Set(orders.map(o => o.tourName))];
+    sel.innerHTML = '<option value="">All Tours</option>' + names.map(n => `<option value="${n}">${n}</option>`).join('');
+  }
+
+  function getFilteredOrders() {
+    return orders.filter(o => {
+      const q = filterText.toLowerCase();
+      const matchText = !q || (o.firstName+' '+o.lastName).toLowerCase().includes(q) || o.tourName.toLowerCase().includes(q) || o.ref.toLowerCase().includes(q) || o.email.toLowerCase().includes(q);
+      const matchStatus = !filterStatus || o.status === filterStatus;
+      const matchTour = !filterTour || o.tourName === filterTour;
+      return matchText && matchStatus && matchTour;
+    });
+  }
+
+  // ── SHARED ORDER ROW RENDERER ──
+  function orderRow(o) {
+    const color = AVATAR_COLORS[(o.firstName.charCodeAt(0)) % AVATAR_COLORS.length];
+    const initials = (o.firstName[0] + o.lastName[0]).toUpperCase();
+    const dateStr = o.date ? new Date(o.date + 'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—';
+    const sourceLabel = o.source === 'homepage' ? 'Home' : o.source === 'tours-page' ? 'Tours' : '';
+    const sourceBadge = sourceLabel ? `<span style="font-size:0.63rem;font-weight:700;background:rgba(0,51,102,0.08);color:#003366;padding:2px 7px;border-radius:10px;margin-left:4px;vertical-align:middle;">${sourceLabel}</span>` : '';
+    return `<tr>
+      <td><span class="order-id">${o.ref}</span>${sourceBadge}</td>
+      <td>
+        <div class="customer-cell">
+          <div class="cust-avatar" style="background:${color}">${initials}</div>
+          <div>
+            <div class="cust-name">${o.firstName} ${o.lastName}</div>
+            <div class="cust-email">${o.email}</div>
+          </div>
+        </div>
+      </td>
+      <td style="font-size:0.82rem;max-width:140px;">${o.tourName}</td>
+      <td style="font-size:0.82rem;white-space:nowrap;">${dateStr}</td>
+      <td style="text-align:center;font-weight:600;">${o.participants}</td>
+      <td><span class="amount-cell">${o.total}</span></td>
+      <td>
+        <div class="pay-method-cell">
+          <i class="${o.payMethod === 'Mobile Money' ? 'fas fa-mobile-alt' : o.payMethod === 'Bank Transfer' ? 'fas fa-university' : 'fas fa-credit-card'}"></i>
+          ${o.payMethod}
+        </div>
+      </td>
+      <td><span class="status-badge ${o.status}">${o.status.charAt(0).toUpperCase()+o.status.slice(1)}</span></td>
+      <td>
+        <div class="action-btns">
+          <button class="action-btn view" onclick="viewOrder('${o.ref}')" title="View"><i class="fas fa-eye"></i></button>
+          <button class="action-btn del" onclick="deleteOrder('${o.ref}')" title="Delete"><i class="fas fa-trash"></i></button>
+        </div>
+      </td>
+    </tr>`;
+  }
+
+  function renderOrders() {
+    const filtered = getFilteredOrders();
+    const total = filtered.length;
+    const start = (currentPage - 1) * PER_PAGE;
+    const page = filtered.slice(start, start + PER_PAGE);
+    const tbody = document.getElementById('ordersTableBody');
+    const empty = document.getElementById('emptyState');
+
+    if (total === 0) { tbody.innerHTML = ''; empty.style.display = 'block'; }
+    else { empty.style.display = 'none'; }
+
+    tbody.innerHTML = page.map(o => orderRow(o)).join('');
+
+    document.getElementById('pagInfo').textContent = `Showing ${Math.min(start+1, total)}–${Math.min(start+PER_PAGE, total)} of ${total} order${total !== 1 ? 's' : ''}`;
+    renderPagination(total);
+  }
+
+  function renderPagination(total) {
+    const pages = Math.ceil(total / PER_PAGE);
+    const btns = document.getElementById('pagBtns');
+    if (pages <= 1) { btns.innerHTML = ''; return; }
+    btns.innerHTML = `<button class="pag-btn" onclick="gotoPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>` +
+      Array.from({length:pages},(_,i)=>`<button class="pag-btn ${i+1===currentPage?'active':''}" onclick="gotoPage(${i+1})">${i+1}</button>`).join('') +
+      `<button class="pag-btn" onclick="gotoPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>›</button>`;
+  }
+
+  function gotoPage(p) {
+    const pages = Math.ceil(getFilteredOrders().length / PER_PAGE);
+    if (p < 1 || p > pages) return;
+    currentPage = p; renderOrders();
+  }
+
+  function filterOrders(v) { filterText = v; currentPage = 1; renderOrders(); }
+  function filterByStatus(v) { filterStatus = v; currentPage = 1; renderOrders(); }
+  function filterByTour(v) { filterTour = v; currentPage = 1; renderOrders(); }
+
+  // ── ORDER DETAIL ──
+  function viewOrder(ref) {
+    const o = orders.find(x => x.ref === ref);
+    if (!o) return;
+    currentDetailRef = ref;
+    document.getElementById('dRef').textContent = o.ref;
+    document.getElementById('dName').textContent = o.firstName + ' ' + o.lastName;
+    document.getElementById('dEmail').textContent = o.email;
+    document.getElementById('dPhone').textContent = o.phone;
+    document.getElementById('dTour').textContent = o.tourName;
+    document.getElementById('dDate').textContent = o.date ? new Date(o.date+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'}) : '—';
+    document.getElementById('dPax').textContent = o.participants + ' person' + (o.participants > 1 ? 's' : '');
+    document.getElementById('dPay').textContent = o.payMethod;
+    document.getElementById('dRequests').textContent = o.requests || 'None';
+    const sourceMap = { 'homepage': 'Homepage', 'tours-page': 'Tours Page', 'admin': 'Admin (Manual)' };
+    document.getElementById('dSource').textContent = sourceMap[o.source] || (o.source || 'Admin (Manual)');
+    document.getElementById('dTotal').textContent = o.total;
+    document.getElementById('dStatusSelect').value = o.status;
+    document.getElementById('detailOverlay').classList.add('open');
+  }
+
+  function closeDetail() { document.getElementById('detailOverlay').classList.remove('open'); }
+
+  function saveStatus() {
+    const o = orders.find(x => x.ref === currentDetailRef);
+    if (!o) return;
+    o.status = document.getElementById('dStatusSelect').value;
+    saveOrders(); updateStats(); renderOrders();
+    showToast('Status updated to ' + o.status, 'success');
+    closeDetail();
+  }
+
+  function deleteOrder(ref) {
+    if (!confirm('Delete this order? This cannot be undone.')) return;
+    orders = orders.filter(o => o.ref !== ref);
+    saveOrders(); updateStats(); populateTourFilter(); renderOrders();
+    showToast('Order deleted.', 'error');
+  }
+
+  // ── ADD ORDER ──
+  function openAddOrder() {
+    // Sync tour dropdown with live admin catalog
+    const sel = document.getElementById('aoTour');
+    if (sel && tourCatalog.length) {
+      sel.innerHTML = tourCatalog
+        .filter(t => t.status !== 'inactive')
+        .map(t => `<option value="${t.key}">${t.name} ($${t.price.toLocaleString()})</option>`)
+        .join('');
+    }
+    document.getElementById('addOrderOverlay').classList.add('open');
+  }
+  function closeAddOrder() { document.getElementById('addOrderOverlay').classList.remove('open'); }
+
+  function saveNewOrder() {
+    const first = document.getElementById('aoFirst').value.trim();
+    const last  = document.getElementById('aoLast').value.trim();
+    const email = document.getElementById('aoEmail').value.trim();
+    const phone = document.getElementById('aoPhone').value.trim();
+    const tourKey = document.getElementById('aoTour').value;
+    const date  = document.getElementById('aoDate').value;
+    const pax   = parseInt(document.getElementById('aoPax').value) || 1;
+    const pay   = document.getElementById('aoPay').value;
+    const req   = document.getElementById('aoRequests').value.trim();
+
+    if (!first || !last || !email || !phone || !date) { showToast('Please fill all required fields.', 'error'); return; }
+
+    const tour = TOUR_PRICES[tourKey];
+    const ref = 'GT-' + Math.random().toString(36).substr(2,6).toUpperCase();
+    const total = '$' + (tour.price * pax).toLocaleString('en-US', {minimumFractionDigits:2});
+    orders.unshift({ ref, firstName:first, lastName:last, email, phone, tour:tourKey, tourName:tour.name, date, participants:pax, payMethod:pay, requests:req, status:'pending', total, createdAt:new Date().toISOString(), source:'admin' });
+    saveOrders(); updateStats(); populateTourFilter(); renderOrders();
+    closeAddOrder();
+    showToast('Order added: ' + ref, 'success');
+  }
+
+  // ── UTILS ──
+  function saveOrders() { localStorage.setItem('wiann_orders', JSON.stringify(orders)); }
+
+  function showToast(msg, type='') {
+    const t = document.getElementById('toast');
+    t.textContent = msg; t.className = 'toast ' + type + ' show';
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  // ── SECTION NAVIGATION ──
+  const SECTION_TITLES = {
+    overview:   { title:'Dashboard Overview' },
+    tourorders: { title:'Tour Orders' },
+    tours:      { title:'Manage Tours' },
+    customers:  { title:'Customers' },
+    reports:    { title:'Reports' },
+    settings:   { title:'Settings' },
+  };
+
+  function navTo(name) {
+    const el = document.querySelector(`.nav-item[onclick*="${name}"]`);
+    showSection(name, el);
+  }
+
+  function showSection(name, el) {
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
+    document.querySelectorAll('.dash-section').forEach(s => s.style.display = 'none');
+    const sec = document.getElementById('sec-' + name);
+    if (sec) sec.style.display = 'block';
+    const info = SECTION_TITLES[name];
+    if (info) document.getElementById('topbarTitle').textContent = info.title;
+    if (name === 'tourorders') renderOrdersPage();
+    if (name === 'customers')  renderCustomers();
+    if (name === 'tours')      renderToursPage();
+    if (name === 'reports')    renderReports();
+    if (name === 'settings')   loadSettingsForm();
+    if (name === 'overview')   renderNotifications();
+    document.getElementById('sidebar').classList.remove('open');
+    const mob = document.getElementById('mobToggle');
+    if (mob) mob.classList.remove('open');
+    const bd = document.getElementById('sidebarBackdrop');
+    if (bd) bd.classList.remove('show');
+  }
+
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const btn = document.getElementById('mobToggle');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    sidebar.classList.toggle('open');
+    btn.classList.toggle('open');
+    if (backdrop) backdrop.classList.toggle('show', sidebar.classList.contains('open'));
+  }
+
+  // ── NOTIFICATIONS ──
+  function renderNotifications() {
+    const el = document.getElementById('notificationsList');
+    if (!el) return;
+    const pending = orders.filter(o => o.status === 'pending');
+    const cancelled = orders.filter(o => o.status === 'cancelled');
+    const fromFrontend = orders.filter(o => o.source === 'homepage' || o.source === 'tours-page');
+    const notifs = [];
+    if (fromFrontend.length) notifs.push({ color:'#5b9bd5', text: `${fromFrontend.length} booking${fromFrontend.length>1?'s':''} received from the website`, icon:'fa-globe' });
+    if (pending.length) notifs.push({ color:'#e6b800', text: `${pending.length} booking${pending.length>1?'s':''} awaiting confirmation`, icon:'fa-clock' });
+    if (cancelled.length) notifs.push({ color:'#CE1126', text: `${cancelled.length} cancelled booking${cancelled.length>1?'s':''}`, icon:'fa-times-circle' });
+    const upcoming = orders.filter(o => { const d = new Date(o.date+'T00:00:00'); return d >= new Date() && o.status==='confirmed'; });
+    if (upcoming.length) notifs.push({ color:'#006B3F', text: `${upcoming.length} confirmed upcoming tour${upcoming.length>1?'s':''}`, icon:'fa-calendar-check' });
+    if (notifs.length === 0) notifs.push({ color:'#006B3F', text: 'All clear — no pending actions', icon:'fa-check-circle' });
+    el.innerHTML = notifs.map(n => `<div class="notif-item"><div class="notif-dot-lg" style="background:${n.color}"></div><span><i class="fas ${n.icon}" style="color:${n.color};margin-right:0.3rem;font-size:0.8rem;"></i>${n.text}</span></div>`).join('');
+  }
+
+  // ── TOUR ORDERS PAGE ──
+  let filterText2 = '', filterStatus2 = '', filterTour2 = '', filterDate2 = '', currentPage2 = 1;
+
+  function renderOrdersPage() {
+    const sel = document.getElementById('tourFilter2');
+    if (sel) {
+      const names = [...new Set(orders.map(o => o.tourName))];
+      sel.innerHTML = '<option value="">All Tours</option>' + names.map(n => `<option value="${n}">${n}</option>`).join('');
+    }
+    renderOrders2();
+  }
+
+  function filterOrders2(v) { filterText2 = v; currentPage2 = 1; renderOrders2(); }
+  function filterByStatus2(v) { filterStatus2 = v; currentPage2 = 1; renderOrders2(); }
+  function filterByTour2(v) { filterTour2 = v; currentPage2 = 1; renderOrders2(); }
+  function filterByDate2(v) { filterDate2 = v; currentPage2 = 1; renderOrders2(); }
+
+  function getFilteredOrders2() {
+    return orders.filter(o => {
+      const q = filterText2.toLowerCase();
+      const matchText   = !q || (o.firstName+' '+o.lastName).toLowerCase().includes(q) || o.tourName.toLowerCase().includes(q) || o.ref.toLowerCase().includes(q) || o.email.toLowerCase().includes(q);
+      const matchStatus = !filterStatus2 || o.status === filterStatus2;
+      const matchTour   = !filterTour2   || o.tourName === filterTour2;
+      const matchDate   = !filterDate2   || o.date === filterDate2;
+      return matchText && matchStatus && matchTour && matchDate;
+    });
+  }
+
+  function renderOrders2() {
+    const filtered = getFilteredOrders2();
+    const total = filtered.length;
+    const start = (currentPage2 - 1) * PER_PAGE;
+    const page  = filtered.slice(start, start + PER_PAGE);
+    const tbody = document.getElementById('ordersTableBody2');
+    const empty = document.getElementById('emptyState2');
+    if (!tbody) return;
+    empty.style.display = total === 0 ? 'block' : 'none';
+    tbody.innerHTML = page.map(o => orderRow(o)).join('');
+    document.getElementById('pagInfo2').textContent = `Showing ${total===0?0:start+1}–${Math.min(start+PER_PAGE,total)} of ${total} order${total!==1?'s':''}`;
+    const pages = Math.ceil(total / PER_PAGE);
+    const pagBtns2 = document.getElementById('pagBtns2');
+    pagBtns2.innerHTML = pages <= 1 ? '' :
+      `<button class="pag-btn" onclick="gotoPage2(${currentPage2-1})" ${currentPage2===1?'disabled':''}>‹</button>` +
+      Array.from({length:pages},(_,i)=>`<button class="pag-btn ${i+1===currentPage2?'active':''}" onclick="gotoPage2(${i+1})">${i+1}</button>`).join('') +
+      `<button class="pag-btn" onclick="gotoPage2(${currentPage2+1})" ${currentPage2===pages?'disabled':''}>›</button>`;
+  }
+
+  function gotoPage2(p) { const pages=Math.ceil(getFilteredOrders2().length/PER_PAGE); if(p<1||p>pages)return; currentPage2=p; renderOrders2(); }
+
+  // ── TOURS PAGE ──
+  let tourCatalog = JSON.parse(localStorage.getItem('wiann_tour_catalog') || 'null') || Object.entries(TOUR_PRICES).map(([key,t]) => ({
+    key, name:t.name, price:t.price, maxPax:12, description:'A curated Ghana experience.', status:'active'
+  }));
+
+  function saveTourCatalog() { localStorage.setItem('wiann_tour_catalog', JSON.stringify(tourCatalog)); }
+
+  function renderToursPage() {
+    const grid = document.getElementById('toursGrid');
+    if (!grid) return;
+    const tourBookings = {};
+    orders.forEach(o => { tourBookings[o.tourName] = (tourBookings[o.tourName]||0)+1; });
+    grid.innerHTML = tourCatalog.map((t, idx) => {
+      const bookings = tourBookings[t.name] || 0;
+      const revenue = orders.filter(o => o.tour===t.key && (o.status==='confirmed'||o.status==='completed')).reduce((s,o)=>s+parseFloat(o.total.replace(/[$,]/g,'')),0);
+      const occupancy = t.maxPax > 0 ? Math.min(100, Math.round((bookings/t.maxPax)*100)) : 0;
+      return `<div class="tour-pkg-card">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.7rem;">
+          <div>
+            <span class="tour-pkg-price">$${t.price.toLocaleString()}<span style="font-size:0.75rem;color:var(--muted);font-family:'Jost',sans-serif;">/person</span></span>
+            <span class="status-badge ${t.status==='active'?'confirmed':'cancelled'}" style="font-size:0.7rem;margin-left:0.5rem;">${t.status==='active'?'Active':'Inactive'}</span>
+          </div>
+          <span style="font-size:0.72rem;color:var(--muted);background:var(--light);padding:2px 7px;">Max ${t.maxPax} pax</span>
+        </div>
+        <h4>${t.name}</h4>
+        <p style="font-size:0.8rem;color:var(--muted);margin:0.4rem 0 0.8rem;">${t.description}</p>
+        <div style="margin-bottom:0.8rem;">
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:0.3rem;">
+            <span style="color:var(--muted);">Occupancy</span><span style="font-weight:700;color:var(--navy);">${bookings}/${t.maxPax} booked</span>
+          </div>
+          <div class="report-bar-track"><div class="report-bar-fill" style="width:${occupancy}%;background:${occupancy>80?'#CE1126':occupancy>50?'#e6b800':'#006B3F'}"></div></div>
+        </div>
+        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.8rem;">Revenue: <strong style="color:var(--navy);">$${revenue.toLocaleString('en-US',{minimumFractionDigits:0})}</strong></div>
+        <div class="tour-pkg-actions">
+          <button class="tpkg-btn" onclick="editTour(${idx})"><i class="fas fa-edit"></i> Edit</button>
+          <button class="tpkg-btn" onclick="toggleTourStatus(${idx})"><i class="fas fa-power-off"></i> ${t.status==='active'?'Deactivate':'Activate'}</button>
+          <button class="tpkg-btn danger" onclick="deleteTour(${idx})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function toggleTourStatus(idx) {
+    tourCatalog[idx].status = tourCatalog[idx].status === 'active' ? 'inactive' : 'active';
+    saveTourCatalog(); renderToursPage();
+    showToast('Tour status updated.', 'success');
+  }
+
+  function deleteTour(idx) {
+    if (!confirm('Delete this tour from the catalog?')) return;
+    tourCatalog.splice(idx, 1);
+    saveTourCatalog(); renderToursPage();
+    showToast('Tour removed.', 'error');
+  }
+
+  function editTour(idx) {
+    const t = tourCatalog[idx];
+    document.getElementById('tourModalEditIdx').value = idx;
+    document.getElementById('tourModalEyebrow').textContent = 'Edit Tour';
+    document.getElementById('tourModalTitle').textContent = 'Update Tour Details';
+    document.getElementById('tourModalBtnLabel').textContent = 'Save Changes';
+    document.getElementById('tourModalSaveBtn').querySelector('i').className = 'fas fa-save';
+    document.getElementById('tmName').value = t.name || '';
+    document.getElementById('tmPrice').value = t.price || '';
+    document.getElementById('tmMaxPax').value = t.maxPax || 12;
+    document.getElementById('tmDuration').value = t.duration || '';
+    document.getElementById('tmDesc').value = t.description || '';
+    document.getElementById('tmRegion').value = t.region || '';
+    document.getElementById('tmStatus').value = t.status || 'active';
+    updateTourModalPreview();
+    document.getElementById('tourModalOverlay').classList.add('open');
+  }
+
+  function openAddTourModal() {
+    document.getElementById('tourModalEditIdx').value = '-1';
+    document.getElementById('tourModalEyebrow').textContent = 'Tour Catalogue';
+    document.getElementById('tourModalTitle').textContent = 'Add New Tour';
+    document.getElementById('tourModalBtnLabel').textContent = 'Add Tour';
+    document.getElementById('tourModalSaveBtn').querySelector('i').className = 'fas fa-plus-circle';
+    document.getElementById('tmName').value = '';
+    document.getElementById('tmPrice').value = '';
+    document.getElementById('tmMaxPax').value = '12';
+    document.getElementById('tmDuration').value = '';
+    document.getElementById('tmDesc').value = '';
+    document.getElementById('tmRegion').value = '';
+    document.getElementById('tmStatus').value = 'active';
+    updateTourModalPreview();
+    document.getElementById('tourModalOverlay').classList.add('open');
+  }
+
+  function updateTourModalPreview() {
+    const name = document.getElementById('tmName').value || 'Tour name preview';
+    const price = document.getElementById('tmPrice').value || '0';
+    const pax = document.getElementById('tmMaxPax').value || '0';
+    const status = document.getElementById('tmStatus').value;
+    document.getElementById('tmPreviewName').textContent = name;
+    document.getElementById('tmPreviewMeta').textContent = '$' + (parseFloat(price)||0) + ' / person \u00b7 ' + pax + ' max pax';
+    var badge = document.getElementById('tmPreviewStatus');
+    badge.textContent = status === 'active' ? 'Active' : 'Inactive';
+    badge.className = 'status-badge ' + (status === 'active' ? 'confirmed' : 'cancelled');
+  }
+
+  function closeTourModal() {
+    document.getElementById('tourModalOverlay').classList.remove('open');
+  }
+
+  function saveTourModal() {
+    const editIdx = parseInt(document.getElementById('tourModalEditIdx').value);
+    const name = document.getElementById('tmName').value.trim();
+    const price = parseFloat(document.getElementById('tmPrice').value);
+    const maxPax = parseInt(document.getElementById('tmMaxPax').value) || 12;
+    const desc = document.getElementById('tmDesc').value.trim() || 'A curated Ghana experience.';
+    const duration = document.getElementById('tmDuration').value.trim();
+    const region = document.getElementById('tmRegion').value.trim();
+    const status = document.getElementById('tmStatus').value;
+    let valid = true;
+    if (!name) { document.getElementById('tmNameErr').classList.add('show'); valid = false; }
+    else document.getElementById('tmNameErr').classList.remove('show');
+    if (!price || isNaN(price) || price <= 0) { document.getElementById('tmPriceErr').classList.add('show'); valid = false; }
+    else document.getElementById('tmPriceErr').classList.remove('show');
+    if (!maxPax || isNaN(maxPax)) { document.getElementById('tmMaxPaxErr').classList.add('show'); valid = false; }
+    else document.getElementById('tmMaxPaxErr').classList.remove('show');
+    if (!valid) return;
+    const key = name.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+    const tourData = { key, name, price, maxPax, description: desc, duration, region, status };
+    if (editIdx >= 0) {
+      tourCatalog[editIdx] = Object.assign({}, tourCatalog[editIdx], tourData);
+      showToast('Tour updated!', 'success');
+    } else {
+      tourCatalog.push(tourData);
+      showToast('New tour added!', 'success');
+    }
+    saveTourCatalog(); renderToursPage(); closeTourModal();
+  }
+
+  // ── CUSTOMERS PAGE ──
+  let custSearch = '', custSegment = 'all';
+
+  function setSegment(seg, el) {
+    custSegment = seg;
+    document.querySelectorAll('.seg-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    renderCustomers();
+  }
+
+  function renderCustomers() {
+    const tbody = document.getElementById('customersTableBody');
+    const empty = document.getElementById('custEmpty');
+    if (!tbody) return;
+    const custMap = {};
+    orders.forEach(o => {
+      if (!custMap[o.email]) custMap[o.email] = { name: o.firstName+' '+o.lastName, email: o.email, phone: o.phone, orders: [] };
+      custMap[o.email].orders.push(o);
+    });
+    let custs = Object.values(custMap);
+
+    // Segment filter
+    if (custSegment === 'vip')    custs = custs.filter(c => c.orders.length >= 3);
+    if (custSegment === 'first')  custs = custs.filter(c => c.orders.length === 1);
+    if (custSegment === 'repeat') custs = custs.filter(c => c.orders.length >= 2);
+    if (custSearch) custs = custs.filter(c => c.name.toLowerCase().includes(custSearch.toLowerCase()) || c.email.toLowerCase().includes(custSearch.toLowerCase()));
+
+    empty.style.display = custs.length === 0 ? 'block' : 'none';
+    tbody.innerHTML = custs.map(c => {
+      const color = AVATAR_COLORS[c.email.charCodeAt(0) % AVATAR_COLORS.length];
+      const initials = c.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+      const totalSpent = c.orders.filter(o=>o.status==='confirmed'||o.status==='completed').reduce((s,o)=>s+parseFloat(o.total.replace(/[$,]/g,'')),0);
+      const latest = c.orders.slice().sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))[0];
+      const lastDate = latest ? new Date(latest.createdAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—';
+      const hasActive = c.orders.some(o=>o.status==='confirmed'||o.status==='pending');
+      const isVIP = c.orders.length >= 3;
+      const segment = isVIP ? 'VIP' : c.orders.length >= 2 ? 'Repeat' : 'First-Time';
+      const segColor = isVIP ? 'var(--gold)' : c.orders.length >= 2 ? 'var(--navy)' : 'var(--muted)';
+      return `<tr>
+        <td><div class="customer-cell">
+          <div class="cust-avatar" style="background:${color}">${initials}</div>
+          <div><div class="cust-name">${c.name}</div><div class="cust-email">${c.email}</div></div>
+        </div></td>
+        <td style="font-size:0.82rem;">${c.phone}</td>
+        <td><span style="font-size:0.78rem;font-weight:700;color:${segColor};">${isVIP?'⭐ ':''} ${segment}</span></td>
+        <td style="text-align:center;font-weight:700;color:var(--navy);">${c.orders.length}</td>
+        <td><span class="amount-cell">$${totalSpent.toLocaleString('en-US',{minimumFractionDigits:0})}</span></td>
+        <td style="font-size:0.82rem;">${lastDate}</td>
+        <td><span class="status-badge ${hasActive?'confirmed':'completed'}">${hasActive?'Active':'Past'}</span></td>
+        <td><div class="action-btns">
+          <button class="action-btn view" onclick="viewCustomerOrders('${c.email}')" title="View Orders"><i class="fas fa-eye"></i></button>
+        </div></td>
+      </tr>`;
+    }).join('');
+  }
+
+  function filterCustomers(v) { custSearch = v; renderCustomers(); }
+
+  function viewCustomerOrders(email) {
+    const custOrders = orders.filter(o => o.email === email);
+    if (!custOrders.length) return;
+    const c = custOrders[0];
+    alert(`Orders for ${c.firstName} ${c.lastName}:\n\n` + custOrders.map(o => `${o.ref} — ${o.tourName} — ${o.total} — ${o.status}`).join('\n'));
+  }
+
+  // ── REPORTS PAGE ──
+  function renderReports() {
+    const total = orders.length;
+    const confirmed = orders.filter(o=>o.status==='confirmed'||o.status==='completed');
+    const revenue = confirmed.reduce((s,o)=>s+parseFloat(o.total.replace(/[$,]/g,'')),0);
+    const pending = orders.filter(o=>o.status==='pending').length;
+    const cancelled = orders.filter(o=>o.status==='cancelled').length;
+    const avgOrder = confirmed.length ? (revenue / confirmed.length) : 0;
+
+    const rs = document.getElementById('reportsStats');
+    if (rs) rs.innerHTML = `
+      <div class="stat-card"><div class="stat-icon" style="background:rgba(0,107,63,0.1);color:#006B3F"><i class="fas fa-check-circle"></i></div><div class="stat-value">${confirmed.length}</div><div class="stat-label">Confirmed Bookings</div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:rgba(0,51,102,0.1);color:#003366"><i class="fas fa-dollar-sign"></i></div><div class="stat-value">$${revenue.toLocaleString('en-US',{minimumFractionDigits:0})}</div><div class="stat-label">Total Revenue</div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:rgba(252,209,22,0.15);color:#a07c00"><i class="fas fa-clock"></i></div><div class="stat-value">${pending}</div><div class="stat-label">Pending Orders</div></div>
+      <div class="stat-card"><div class="stat-icon" style="background:rgba(255,77,166,0.1);color:var(--pink)"><i class="fas fa-receipt"></i></div><div class="stat-value">$${Math.round(avgOrder).toLocaleString()}</div><div class="stat-label">Avg. Order Value</div></div>
+    `;
+
+    const barColors = ['#003366','#006B3F','#CE1126','#FCD116','#FF4DA6','#5b9bd5'];
+
+    // By Tour
+    const byTour = {};
+    orders.forEach(o => { byTour[o.tourName] = (byTour[o.tourName]||0)+1; });
+    const maxT = Math.max(...Object.values(byTour), 1);
+    document.getElementById('reportsByTour').innerHTML = Object.entries(byTour).sort((a,b)=>b[1]-a[1]).map(([name,count],i)=>`
+      <div class="report-bar-wrap">
+        <div class="report-bar-label"><span>${name}</span><span>${count} booking${count!==1?'s':''}</span></div>
+        <div class="report-bar-track"><div class="report-bar-fill" style="width:${(count/maxT*100).toFixed(1)}%;background:${barColors[i%barColors.length]}"></div></div>
+      </div>`).join('') || '<p style="color:var(--muted);font-size:0.85rem;">No data yet.</p>';
+
+    // By Status
+    const byStatus = { confirmed:0, pending:0, completed:0, cancelled:0 };
+    orders.forEach(o => { if(byStatus[o.status]!==undefined) byStatus[o.status]++; });
+    const maxS = Math.max(...Object.values(byStatus), 1);
+    const statusColors = { confirmed:'#006B3F', pending:'#e6b800', completed:'#003366', cancelled:'#CE1126' };
+    document.getElementById('reportsByStatus').innerHTML = Object.entries(byStatus).map(([s,count])=>`
+      <div class="report-bar-wrap">
+        <div class="report-bar-label"><span style="text-transform:capitalize;">${s}</span><span>${count}</span></div>
+        <div class="report-bar-track"><div class="report-bar-fill" style="width:${(count/maxS*100).toFixed(1)}%;background:${statusColors[s]}"></div></div>
+      </div>`).join('');
+
+    // By Payment
+    const byPay = {};
+    orders.forEach(o => { byPay[o.payMethod] = (byPay[o.payMethod]||0)+1; });
+    const maxP = Math.max(...Object.values(byPay), 1);
+    document.getElementById('reportsByPayment').innerHTML = Object.entries(byPay).map(([p,count],i)=>`
+      <div class="report-bar-wrap">
+        <div class="report-bar-label"><span>${p}</span><span>${count} order${count!==1?'s':''}</span></div>
+        <div class="report-bar-track"><div class="report-bar-fill" style="width:${(count/maxP*100).toFixed(1)}%;background:${barColors[i%barColors.length]}"></div></div>
+      </div>`).join('') || '<p style="color:var(--muted);font-size:0.85rem;">No data yet.</p>';
+
+    // Customer Insights
+    const custMap = {};
+    orders.forEach(o => { custMap[o.email] = (custMap[o.email]||0)+1; });
+    const totalCusts = Object.keys(custMap).length;
+    const repeatCusts = Object.values(custMap).filter(n=>n>=2).length;
+    const vipCusts = Object.values(custMap).filter(n=>n>=3).length;
+    document.getElementById('reportsCustomerInsights').innerHTML = `
+      <div class="report-bar-wrap"><div class="report-bar-label"><span>Total Unique Customers</span><span>${totalCusts}</span></div><div class="report-bar-track"><div class="report-bar-fill" style="width:100%;background:#003366"></div></div></div>
+      <div class="report-bar-wrap"><div class="report-bar-label"><span>Repeat Travellers</span><span>${repeatCusts}</span></div><div class="report-bar-track"><div class="report-bar-fill" style="width:${totalCusts?((repeatCusts/totalCusts)*100).toFixed(1):0}%;background:#006B3F"></div></div></div>
+      <div class="report-bar-wrap"><div class="report-bar-label"><span>⭐ VIP Customers (3+ bookings)</span><span>${vipCusts}</span></div><div class="report-bar-track"><div class="report-bar-fill" style="width:${totalCusts?((vipCusts/totalCusts)*100).toFixed(1):0}%;background:#FCD116"></div></div></div>
+      <div class="report-bar-wrap"><div class="report-bar-label"><span>Cancellation Rate</span><span>${total?((cancelled/total)*100).toFixed(1):0}%</span></div><div class="report-bar-track"><div class="report-bar-fill" style="width:${total?((cancelled/total)*100).toFixed(1):0}%;background:#CE1126"></div></div></div>
+    `;
+  }
+
+  // ── SETTINGS PAGE ──
+  function setSettingsTab(tab, el) {
+    document.querySelectorAll('.settings-tab').forEach(t => t.style.display = 'none');
+    document.querySelectorAll('#settingsTabs .seg-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('stab-' + tab).style.display = 'block';
+    el.classList.add('active');
+  }
+
+  function loadSettingsForm() {
+    if (!currentAdmin) return;
+    document.getElementById('setFirst').value = currentAdmin.firstName || '';
+    document.getElementById('setLast').value  = currentAdmin.lastName  || '';
+    document.getElementById('setEmail').value = currentAdmin.email     || '';
+    // Show first tab by default
+    document.querySelectorAll('.settings-tab').forEach((t,i) => t.style.display = i===0 ? 'block' : 'none');
+    document.querySelectorAll('#settingsTabs .seg-tab').forEach((t,i) => { t.classList.toggle('active', i===0); });
+  }
+
+  function saveProfile() {
+    const first = document.getElementById('setFirst').value.trim();
+    const last  = document.getElementById('setLast').value.trim();
+    const email = document.getElementById('setEmail').value.trim();
+    if (!first||!last||!email) { showToast('Please fill all fields.','error'); return; }
+    currentAdmin.firstName = first; currentAdmin.lastName = last; currentAdmin.email = email;
+    localStorage.setItem('wiann_current_admin', JSON.stringify(currentAdmin));
+    const idx = admins.findIndex(a=>a.email===email);
+    if (idx>-1) { admins[idx]=currentAdmin; localStorage.setItem('wiann_admins',JSON.stringify(admins)); }
+    document.getElementById('sidebarName').textContent = first+' '+last;
+    document.getElementById('sidebarAvatar').textContent = first[0].toUpperCase();
+    showToast('Profile updated!','success');
+  }
+
+  function changePassword() {
+    const curr = document.getElementById('setCurrPass').value;
+    const nw   = document.getElementById('setNewPass').value;
+    const conf = document.getElementById('setConfPass').value;
+    if (curr !== currentAdmin.password) { showToast('Current password is incorrect.','error'); return; }
+    if (nw.length < 6) { showToast('New password must be at least 6 characters.','error'); return; }
+    if (nw !== conf) { showToast('Passwords do not match.','error'); return; }
+    currentAdmin.password = nw;
+    localStorage.setItem('wiann_current_admin', JSON.stringify(currentAdmin));
+    const idx = admins.findIndex(a=>a.email===currentAdmin.email);
+    if (idx>-1) { admins[idx]=currentAdmin; localStorage.setItem('wiann_admins',JSON.stringify(admins)); }
+    document.getElementById('setCurrPass').value=''; document.getElementById('setNewPass').value=''; document.getElementById('setConfPass').value='';
+    showToast('Password updated!','success');
+  }
+
+  function saveBizInfo() { showToast('Business info saved!','success'); }
+
+  function clearAllOrders() {
+    if (!confirm('This will delete ALL orders permanently. Are you sure?')) return;
+    orders = []; saveOrders(); updateStats(); renderOrders();
+    showToast('All orders cleared.','error');
+  }
+
+  function togglePass(id, icon) {
+    const inp = document.getElementById(id);
+    if (inp.type === 'password') { inp.type = 'text'; icon.classList.replace('fa-eye','fa-eye-slash'); }
+    else { inp.type = 'password'; icon.classList.replace('fa-eye-slash','fa-eye'); }
+  }
+
+  function toggleExportMenu(id) {
+    document.querySelectorAll('.export-dropdown').forEach(d => { if (d.id !== id) d.classList.remove('open'); });
+    document.getElementById(id).classList.toggle('open');
+  }
+  document.addEventListener('click', e => {
+    if (!e.target.closest('.export-wrap')) document.querySelectorAll('.export-dropdown').forEach(d => d.classList.remove('open'));
+  });
+
+  function getExportOrders(context) {
+    return context === 'tourorders' ? getFilteredOrders2() : getFilteredOrders();
+  }
+
+  function exportCSV(context) {
+    const filtered = getExportOrders(context);
+    if (!filtered.length) { showToast('No orders to export.', 'error'); return; }
+    const date = new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+    const brandRow = ['"Wi-Ann Travel & Tour"','','','','','','','','','',''];
+    const dateRow  = [`"Exported: ${date}"`, '', '', '', '', '', '', '', '', '', ''];
+    const blankRow = ['','','','','','','','','','',''];
+    const headers  = ['Ref','First Name','Last Name','Email','Phone','Tour','Date','Participants','Amount','Payment','Status'];
+    const rows = filtered.map(o => [o.ref, o.firstName, o.lastName, o.email, o.phone, o.tourName, o.date, o.participants, o.total, o.payMethod, o.status]);
+    const csv = [brandRow, dateRow, blankRow, headers, ...rows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+    const a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'wiann-orders-' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+    showToast('CSV exported!', 'success');
+  }
+
+  function exportPDF(context) {
+    const filtered = getExportOrders(context);
+    if (!filtered.length) { showToast('No orders to export.', 'error'); return; }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+    const PW = doc.internal.pageSize.getWidth();
+
+    const LOGO_URL = 'https://res.cloudinary.com/duokkf6tl/image/upload/v1773628247/logo_nhdd5o.png';
+    const logoImg = new Image();
+    logoImg.crossOrigin = 'anonymous';
+
+    const render = (logoDataUrl) => {
+      const kente = [
+        { color: [206,17,38]  },
+        { color: [252,209,22] },
+        { color: [0,107,63]   },
+        { color: [252,209,22] },
+        { color: [206,17,38]  },
+        { color: [26,26,26]   },
+        { color: [252,209,22] },
+        { color: [0,107,63]   },
+        { color: [252,209,22] },
+        { color: [206,17,38]  },
+      ];
+      const kW = PW / kente.length;
+      kente.forEach((k, i) => {
+        doc.setFillColor(...k.color);
+        doc.rect(i * kW, 0, kW, 6, 'F');
+      });
+
+      // Logo circle
+      if (logoDataUrl) {
+        doc.addImage(logoDataUrl, 'PNG', 20, 14, 42, 42, '', 'FAST');
+      }
+
+      // Brand text
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16);
+      doc.setTextColor(0, 51, 102);
+      doc.text('WI-ANN', 70, 30);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(255, 77, 166);
+      doc.text('TRAVEL & TOUR', 70, 42);
+
+      // Right side — report info
+      const dateStr = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      doc.setTextColor(26, 26, 26);
+      doc.text('Tour Bookings Report', PW - 20, 26, { align: 'right' });
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9);
+      doc.setTextColor(100, 100, 100);
+      doc.text('Exported: ' + dateStr, PW - 20, 38, { align: 'right' });
+      doc.text('Total orders: ' + filtered.length, PW - 20, 50, { align: 'right' });
+
+      // Divider
+      doc.setDrawColor(229, 229, 229);
+      doc.setLineWidth(0.5);
+      doc.line(20, 64, PW - 20, 64);
+
+      // Table
+      const tableRows = filtered.map(o => [
+        o.ref,
+        o.firstName + ' ' + o.lastName,
+        o.email,
+        o.tourName,
+        o.date ? new Date(o.date+'T00:00:00').toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—',
+        String(o.participants),
+        o.total,
+        o.payMethod,
+        o.status.charAt(0).toUpperCase() + o.status.slice(1),
+      ]);
+
+      const STATUS_COLORS = {
+        Confirmed: [0,107,63], Pending: [160,124,0],
+        Completed: [0,51,102], Cancelled: [206,17,38],
+      };
+
+      doc.autoTable({
+        startY: 72,
+        head: [['Ref #','Customer','Email','Tour','Date','Pax','Amount','Payment','Status']],
+        body: tableRows,
+        styles: { font:'helvetica', fontSize:8, cellPadding:5, valign:'middle', textColor:[51,51,51] },
+        headStyles: { fillColor:[0,51,102], textColor:255, fontStyle:'bold', fontSize:8 },
+        alternateRowStyles: { fillColor:[248,248,248] },
+        columnStyles: {
+          0: { fontStyle:'bold', textColor:[0,107,63], cellWidth:55 },
+          1: { cellWidth:80 },
+          2: { cellWidth:105 },
+          3: { cellWidth:105 },
+          4: { cellWidth:65 },
+          5: { cellWidth:25, halign:'center' },
+          6: { fontStyle:'bold', cellWidth:55 },
+          7: { cellWidth:75 },
+          8: { cellWidth:55 },
+        },
+        didParseCell: (data) => {
+          if (data.column.index === 8 && data.section === 'body') {
+            const color = STATUS_COLORS[data.cell.raw] || [51,51,51];
+            data.cell.styles.textColor = color;
+            data.cell.styles.fontStyle = 'bold';
+          }
+        },
+        margin: { left:20, right:20 },
+        didDrawPage: (data) => {
+          // Footer on each page
+          const pageCount = doc.internal.getNumberOfPages();
+          const pageH = doc.internal.pageSize.getHeight();
+          doc.setDrawColor(229,229,229);
+          doc.setLineWidth(0.5);
+          doc.line(20, pageH - 24, PW - 20, pageH - 24);
+          doc.setFont('helvetica','normal');
+          doc.setFontSize(8);
+          doc.setTextColor(180,180,180);
+          doc.text('Wi-Ann Travel & Tour  •  Confidential', 20, pageH - 12);
+          doc.text('Page ' + data.pageNumber + ' of ' + pageCount, PW - 20, pageH - 12, { align:'right' });
+        },
+      });
+
+      doc.save('wiann-orders-' + new Date().toISOString().slice(0,10) + '.pdf');
+      showToast('PDF downloaded!', 'success');
+    };
+
+    // Load logo as base64 then render
+    logoImg.onload = () => {
+      const c = document.createElement('canvas');
+      c.width = logoImg.naturalWidth; c.height = logoImg.naturalHeight;
+      c.getContext('2d').drawImage(logoImg, 0, 0);
+      render(c.toDataURL('image/png'));
+    };
+    logoImg.onerror = () => render(null);
+    logoImg.src = LOGO_URL;
+  }
+
+  // Close modals on overlay click
+  document.getElementById('detailOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeDetail(); });
+  document.getElementById('addOrderOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeAddOrder(); });
+  document.getElementById('tourModalOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) closeTourModal(); });
+
+  // Live preview for tour modal
+  ['tmName','tmPrice','tmMaxPax','tmStatus'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', updateTourModalPreview);
+    if (el) el.addEventListener('change', updateTourModalPreview);
+  });
+
+  // ── INIT ──
+  if (currentAdmin) { loadDashboard(); }
+  else { showPage('signInPage'); }
+
+  // Demo: add default admin if none exist
+  if (admins.length === 0) {
+    admins.push({ firstName:'Wi-Ann', lastName:'Admin', email:'admin@wiann.com', password:'admin123' });
+    localStorage.setItem('wiann_admins', JSON.stringify(admins));
+  }
+</script>
+</body>
+</html>
